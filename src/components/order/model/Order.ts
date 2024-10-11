@@ -9,6 +9,7 @@ const orderSchema: Schema = new Schema({
   final_price: { type: Number, required: true },
   status: { type: OrderStatus, default: OrderStatus.INIT },
   order_line: { type: [orderLineSchema] },
+  delivery_address: { type: Object, default: null },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 });

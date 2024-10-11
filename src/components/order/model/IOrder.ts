@@ -7,6 +7,7 @@ export default interface IOrder extends Document {
   final_price: number;
   status: OrderStatus;
   order_line: [object];
+  delivery_address: object;
   created_at: Date;
   updated_at: Date;
 }

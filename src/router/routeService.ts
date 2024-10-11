@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import RouteEngine from "./router";
 import usersRouter from "../components/users/usersRouter";
-import productRouter from "../components/products/productsRouter";
+import productRouter from "../components/product/productRouter";
 
 class RouteService {
   public app: Application;

@@ -5,6 +5,7 @@ export default interface IUser extends Document {
   last_name: string;
   email: string;
   mobile: string;
+  addresses: [object];
   total_orders: number;
   wallet: number;
   created_at: Date;

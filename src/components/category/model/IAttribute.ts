@@ -1,7 +1,6 @@
-export default interface IProductAttribute {
+export default interface IAttribute {
   title: string;
   slug: string;
-  value: string;
   filterable: boolean;
   hasPrice: boolean;
 }

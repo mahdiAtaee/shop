@@ -1,31 +1,26 @@
 import React from "react";
 import Content from "../partial/Content";
 import SkeletonLoading from "../util/Skeleton";
-import { makeStyles, createStyles } from "@mui/styles";
-import { Theme } from "@mui/material";
+import { Grid2 } from "@mui/material";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    wrapper: {
-      display: "flex",
-      alignItems: "center",
-    },
-    Rectangle: {
-      margin: theme.spacing(1, 2),
-    },
-  })
-);
 
 export default function Products() {
-  const classes = useStyles();
   return (
-    <Content title="لیست محصولات" >
-      <div className={classes.wrapper}>
-        <SkeletonLoading />
-        <SkeletonLoading />
-        <SkeletonLoading />
-        <SkeletonLoading />
-      </div>
+    <Content title="لیست محصولات">
+      <Grid2 container>
+        <Grid2 size={{ xs: 12, md: 3 }}>
+          <SkeletonLoading />
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 3 }}>
+          <SkeletonLoading />
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 3 }}>
+          <SkeletonLoading />
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 3 }}>
+          <SkeletonLoading />
+        </Grid2>
+      </Grid2>
     </Content>
   );
 }

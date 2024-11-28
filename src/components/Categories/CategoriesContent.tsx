@@ -39,6 +39,10 @@ interface notificationMessage {
   message: string;
   type: AlertColor;
 }
+interface INewCategoryResponse {
+  newCategory: object;
+  success: boolean;
+}
 
 const CategoriesContent = () => {
   const classes = useStyles();
@@ -89,12 +93,15 @@ const CategoriesContent = () => {
 
   const SaveCategory = async () => {
     const httpClient = new Http();
-    const { data } = await httpClient.post("api/v1/categories", {
-      ...state,
-    });
+    const { data } = await httpClient.post(
+      "api/v1/categories",
+      {
+        ...state,
+      }
+    );
     setShowNotify(true);
-    console.log(data);
-    if (data.success === true) {
+    const result = data as INewCategoryResponse
+    if (result.success === true) {
       setNotifyMessage({
         message: "دسته بندی با موفقیت ذخیره شد",
         type: "success",

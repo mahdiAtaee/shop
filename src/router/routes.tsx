@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Products from "../components/Products/Products";
 import Categories from "../components/Categories/Categories";
 import CategoriesEdit from "../components/Categories/CategoriesEdit";
+import ProductsEdit from "../components/Products/ProductsEdit";
 
 interface routeItem {
   path: string;
@@ -13,6 +14,10 @@ const routes: routeItem[] = [
   {
     path: "/products",
     component: Products,
+  },
+  {
+    path: "/products/edit",
+    component: ProductsEdit,
   },
   {
     path: "/categories",

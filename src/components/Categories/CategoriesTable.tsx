@@ -6,40 +6,42 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Http from "../../services/Http";
+import React from "react";
 
-interface CategoryItem {
-  title: string;
-  hash: string;
-  slug: string;
+interface CategoriesTableProps {
+  columns: string[];
+  attributes: string[];
+  data: object[];
 }
 
-const CategoriesTable = () => {
-  const [categories, setCategories] = useState<CategoryItem[]>([]);
-  useEffect(() => {
-    const httpClient = new Http();
-    httpClient.get("api/v1/categories").then((response) => {
-      setCategories(response.data);
-    });
-  }, []);
+const getKeyValue =
+  <T extends object, U extends keyof T>(key: U) =>
+  (obj: T) =>
+    obj[key];
 
+const CategoriesTable = ({
+  columns,
+  attributes,
+  data,
+}: CategoriesTableProps) => {
   return (
     <TableContainer>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>عنوان</TableCell>
-            <TableCell>اسلاگ</TableCell>
-            <TableCell>اکشن ها</TableCell>
+            {columns.map((col, index) => (
+              <TableCell key={index}>{col}</TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {categories.map((category) => (
-            <TableRow key={category.hash}>
-              <TableCell>{category.title}</TableCell>
-              <TableCell>{category.slug}</TableCell>
-              <TableCell></TableCell>
+          {data.map((item, i) => (
+            <TableRow key={i}>
+              {attributes.map((attr: string, i) => (
+                <TableCell key={i}>
+                  {getKeyValue(attr as never)(item)}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

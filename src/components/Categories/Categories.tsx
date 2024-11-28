@@ -1,13 +1,27 @@
-import React from 'react'
-import Content from '../partial/Content'
-import CategoriesTable from './CategoriesTable'
+import React, { useEffect, useState } from "react";
+import Content from "../partial/Content";
+import CategoriesTable from "./CategoriesTable";
+import ICategoryItem from "../contracts/ICategoryItem";
+import Http from "../../services/Http";
 
 const Categories = () => {
-  return (
-    <Content title='لیست دسته بندی ها'>
-      <CategoriesTable />
-    </Content>
-  )
-}
+  const [categories, setCategories] = useState<ICategoryItem[]>([]);
+  useEffect(() => {
+    const httpClient = new Http();
+    httpClient.get<ICategoryItem[]>("api/v1/categories").then((response) => {
+      setCategories(response.data);
+    });
+  }, []);
 
-export default Categories
+  return (
+    <Content title="لیست دسته بندی ها">
+      <CategoriesTable
+        columns={["عنوان", "اسلاگ"]}
+        data={categories}
+        attributes={["title", "slug"]}
+      />
+    </Content>
+  );
+};
+
+export default Categories;

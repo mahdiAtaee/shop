@@ -47,7 +47,7 @@ const Products = () => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <Link className={classes.linkItem} to="/products">
+          <Link className={classes.linkItem} to="/products/edit">
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
                 <AddBoxIcon />
@@ -58,15 +58,17 @@ const Products = () => {
               />
             </ListItemButton>
           </Link>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ListIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.nestedText }}
-              primary="لیست محصولات"
-            />
-          </ListItemButton>
+          <Link className={classes.linkItem} to="/products">
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.nestedText }}
+                primary="لیست محصولات"
+              />
+            </ListItemButton>
+          </Link>
           <Link className={classes.linkItem} to="/categories/edit">
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>

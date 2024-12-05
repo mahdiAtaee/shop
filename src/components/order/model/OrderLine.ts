@@ -5,7 +5,7 @@ const orderLineSchema: Schema = new Schema({
   price: { type: Number, required: true },
   discountedPrice: { type: Number, required: true },
   count: { type: Number, required: true },
-  created_at: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 });
 
 export default orderLineSchema;

@@ -1,6 +1,7 @@
 import { Document } from "mongoose";
 import IAddress from "src/components/users/model/IAddress";
 import IOrderLine from "./IOrderLine";
+import OrderStatus from "./OrderStatus";
 
 export default interface IOrder extends Document {
   user: object;

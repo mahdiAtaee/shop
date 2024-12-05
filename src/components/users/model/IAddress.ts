@@ -5,5 +5,5 @@ export default interface IAddress {
   address: string;
   zip_code: string;
   full_name: string;
-  moblie: string;
+  mobile: string;
 }

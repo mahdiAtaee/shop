@@ -31,6 +31,7 @@ import { v4 as uuid } from "uuid";
 import Color from "./variations/Color";
 import DropDown from "./variations/DropDown";
 import VariantSelect from "./variations/VariantSelect";
+import * as Validator from "./ProductValidator";
 
 function important<T>(value: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,6 +85,7 @@ const ProductsContent = () => {
   const [showPriceVariationDialog, setShowPriceVariationDialog] =
     useState<boolean>(false);
   const [categories, setCategories] = useState<ICategoryItem[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [gallery, setGallery] = useState<File[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -94,6 +96,9 @@ const ProductsContent = () => {
     []
   );
   const [progress, setProgress] = useState<number>(0);
+  const [errorBag, setErrorBag] = useState<Map<string, string>>(
+    new Map<string, string>()
+  );
   useEffect(() => {
     httpClient
       .get<ICategoryItem[]>("api/v1/categories")
@@ -104,20 +109,49 @@ const ProductsContent = () => {
   }, []);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = Validator.validateTitle(e.target.value);
+
+    if (result) {
+      setErrorBag(errorBag.set("title", result));
+    } else {
+      errorBag.delete("title");
+      setErrorBag(errorBag);
+    }
     setTitle(e.target.value);
   };
 
   const handleChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = Validator.validatePrice(e.target.value);
+    if (result) {
+      setErrorBag(errorBag.set("price", result));
+    } else {
+      errorBag.delete("price");
+      setErrorBag(errorBag);
+    }
     setPrice(e.target.value as unknown as number);
   };
 
   const handleChangeDiscountedPrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const result = Validator.validateDiscountedPrice(e.target.value);
+    if (result) {
+      setErrorBag(errorBag.set("discountedPrice", result));
+    } else {
+      errorBag.delete("discountedPrice");
+      setErrorBag(errorBag);
+    }
     setDiscountedPrice(e.target.value as unknown as number);
   };
 
   const handleChangeStock = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = Validator.validateStock(e.target.value);
+    if (result) {
+      setErrorBag(errorBag.set("stock", result));
+    } else {
+      errorBag.delete("stock");
+      setErrorBag(errorBag);
+    }
     setStock(e.target.value as unknown as number);
   };
 
@@ -136,6 +170,7 @@ const ProductsContent = () => {
       .catch((error) => {
         console.log(error);
       });
+      setSelectedCategory(event.target.value)
   };
 
   const updateThumbnail = (file: File) => {
@@ -156,10 +191,11 @@ const ProductsContent = () => {
     form.append("discountedPrice", discountedPrice as unknown as string);
     form.append("stock", stock as unknown as string);
     form.append("thumbnail", thumbnail as Blob);
-    form.append("product_variations", JSON.stringify(variations));
-    form.append("price_variation", JSON.stringify(priceVariations));
+    form.append("category", selectedCategory);
+    form.append("variation", JSON.stringify(variations));
+    form.append("priceVariation", JSON.stringify(priceVariations));
     gallery.forEach((file: File) => {
-      form.append("gallery[]", file as Blob);
+      form.append("gallery", file as Blob);
     });
     form.append("attributes", JSON.stringify(productAttribute));
     httpClient.post("api/v1/products", form, {
@@ -314,6 +350,8 @@ const ProductsContent = () => {
       <FormControl fullWidth className={styles.formRow}>
         <TextField
           onChange={handleChangeTitle}
+          error={errorBag.has("title")}
+          helperText={errorBag.has("title") && errorBag.get("title")}
           id="title"
           name="title"
           label="عنوان محصول"
@@ -323,6 +361,8 @@ const ProductsContent = () => {
       <FormControl fullWidth className={styles.formRow}>
         <TextField
           onChange={handleChangePrice}
+          error={errorBag.has("price")}
+          helperText={errorBag.has("price") && errorBag.get("price")}
           id="price"
           name="price"
           label="قیمت به ریال"
@@ -332,6 +372,10 @@ const ProductsContent = () => {
       <FormControl fullWidth className={styles.formRow}>
         <TextField
           onChange={handleChangeDiscountedPrice}
+          error={errorBag.has("discountedPrice")}
+          helperText={
+            errorBag.has("discountedPrice") && errorBag.get("discountedPrice")
+          }
           id="discounted_price"
           name="discounted_price"
           label="قیمت ویژه"
@@ -341,6 +385,8 @@ const ProductsContent = () => {
       <FormControl fullWidth className={styles.formRow}>
         <TextField
           onChange={handleChangeStock}
+          error={errorBag.has("stock")}
+          helperText={errorBag.has("stock") && errorBag.get("stock")}
           id="stock"
           name="stock"
           label="موجودی"
@@ -476,7 +522,11 @@ const ProductsContent = () => {
         </Section>
       ) : null}
       <FormControl fullWidth className={styles.formRow}>
-        <Button variant="contained" onClick={saveProduct}>
+        <Button
+          disabled={errorBag.size > 0}
+          variant="contained"
+          onClick={saveProduct}
+        >
           ذخیره محصول
         </Button>
       </FormControl>

@@ -7,11 +7,11 @@ const orderSchema: Schema = new Schema({
   total_price: { type: Number, required: true },
   coupon: { type: Object, default: null },
   final_price: { type: Number, required: true },
-  status: { type: OrderStatus, default: OrderStatus.INIT },
-  order_line: { type: [orderLineSchema] },
+  orderLines: { type: [orderLineSchema] },
   delivery_address: { type: Object, default: null },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
+  status: { type: OrderStatus, default: OrderStatus.INIT },
 });
 
 export default model<IOrder>("Order", orderSchema);

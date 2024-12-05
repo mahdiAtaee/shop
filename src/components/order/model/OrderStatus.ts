@@ -9,3 +9,5 @@ enum OrderStatus {
   CANCELED,
   REFUNDED,
 }
+
+export default OrderStatus

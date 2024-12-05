@@ -1,16 +1,24 @@
 import { Document } from "mongoose";
 import ProductStatus from "./productStatus";
 import IProductAttribute from "./IProductAttribute";
+import IAttributeGroup from "./IAttributeGroup";
+import IProductVariation from "./IProductVariation";
+import IPriceVariation from "./IPriceVariation";
 
 export default interface IProducts extends Document {
   title: string;
   price: number;
-  sale_price: number;
-  thumbnail: string;
-  gallery: [string];
-  product_category: string;
-  attributes: [IProductAttribute];
+  discountedPrice: number;
+  thumbnail?: string;
+  thumbnailUrl?: string;
+  gallery?: string[];
+  galleryUrl?: string[];
+  category: string;
+  attributes: IAttributeGroup[];
+  variation: IProductVariation[];
+  priceVariation: IPriceVariation[];
   created_at: Date;
   updated_at: Date;
+  stock: number;
   status: ProductStatus;
 }

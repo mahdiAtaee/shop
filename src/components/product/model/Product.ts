@@ -5,14 +5,28 @@ import ProductStatus from "./productStatus";
 const ProductSchema: Schema = new Schema({
   title: { type: String, required: true },
   price: { type: Number, required: true },
-  sale_price: { type: Number, default: 0 },
+  stock: { type: Number, required: true },
+  discountedPrice: { type: Number, default: 0 },
   thumbnail: { type: String },
   gallery: { type: [String] },
-  product_category: { type: Schema.Types.ObjectId, ref: "ProductCategory" },
+  category: { type: Schema.Types.ObjectId, ref: "ProductCategory" },
   attributes: { type: [Object], required: true },
+  variation: { type: [Object] },
+  priceVariation: { type: [Object] },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
-  status: { type: ProductStatus, default: ProductStatus.INIT },
+  status: { type: String, enum: ProductStatus, default: ProductStatus.INIT },
 });
 
-export default model<IProducts>("Products", ProductSchema);
+ProductSchema.virtual('thumbnailUrl').get(function (this:IProducts) {
+  return `${process.env.APP_URL}/contents/${this.thumbnail}`
+})
+
+
+ProductSchema.virtual('galleryUrl').get(function (this:IProducts) {
+  return this.gallery?.map((item:string) => {
+    return `${process.env.APP_URL}/contents/${item}`
+  })
+})
+
+export default model<IProducts>("Product", ProductSchema);

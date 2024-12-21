@@ -4,10 +4,9 @@ import IOrderLine from "./IOrderLine";
 import OrderStatus from "./OrderStatus";
 
 export default interface IOrder extends Document {
-  user: object;
-  total_price: number;
-  discountedPrice: number
-  final_price: number;
+  user: string;
+  totalPrice: number;
+  finalPrice: number;
   coupon: object;
   deliveryAddress: IAddress;
   orderLines: IOrderLine[];

@@ -1,5 +1,11 @@
+export interface IProductVariationItem {
+  title: string;
+  value: string;
+}
+
 export default interface IProductVariation {
   title: string;
   name: string;
-  items: [object];
+  type: string;
+  items: IProductVariationItem[];
 }

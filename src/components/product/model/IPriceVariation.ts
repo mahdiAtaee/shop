@@ -1,4 +1,4 @@
 export default interface IPriceVariation {
     price: number
-    items: [object]
+    items: object[]
 }

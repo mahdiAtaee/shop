@@ -30,11 +30,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "uuid": "^11.0.3",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
-    "@types/": "faker-js/faker",
     "@types/express-fileupload": "^1.5.1",
     "@types/faker": "^6.6.11",
     "@types/mongoose": "^5.11.97",

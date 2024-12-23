@@ -9,7 +9,7 @@ const couponSchema: Schema = new Schema({
   used: { type: Number, default: 0 },
   expired_at: { type: Date, default: null },
   constraints: { type: Object, required: true },
-  status: { type: CouponStatus, default: CouponStatus.ACTIVE },
+  status: { type: Number,enum:CouponStatus, default: CouponStatus.ACTIVE },
 });
 
 export default model<ICoupon>("Coupon", couponSchema);

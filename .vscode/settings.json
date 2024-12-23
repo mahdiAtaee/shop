@@ -1,4 +1,9 @@
 {
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "Operator Mono Lig Medium",
+    "editor.fontSize": 15,
+    "editor.lineHeight": 2,
+    "editor.renderLineHighlight": "line",
     "cSpell.words": [
         "Jalali"
     ]

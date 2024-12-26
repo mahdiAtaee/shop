@@ -11,9 +11,8 @@ export default class ProductTransformer implements ITransformer<IOrders> {
     return {
       id: item._id,
       user: this.getUser(item.user),
-      total_price: item.total_price,
-      discountedPrice: item.discountedPrice,
-      final_price: item.final_price,
+      total_price: item.totalPrice,
+      final_price: item.finalPrice,
       coupon: this.getCoupon(item.coupon),
       deliveryAddress: item.deliveryAddress,
       orderLines: item.orderLines,
@@ -30,8 +29,8 @@ export default class ProductTransformer implements ITransformer<IOrders> {
       return null;
     }
     return {
-      firstName: user.first_name,
-      lastName: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
     };
   }

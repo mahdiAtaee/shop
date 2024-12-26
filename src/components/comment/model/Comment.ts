@@ -9,8 +9,8 @@ const commentSchema: Schema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
   isBuyer: { type: Boolean, default: false },
-  adviceToBuy: { type: AdviceToBuy, default: AdviceToBuy.NOT_SURE },
-  status: { type: CommentStatus, default: CommentStatus.PENDING },
+  adviceToBuy: { type: Number, enum: AdviceToBuy, default: AdviceToBuy.NOT_SURE },
+  status: { type: Number, enum: CommentStatus, default: CommentStatus.PENDING },
   createdAt: { type: Date, default: Date.now },
 });
 

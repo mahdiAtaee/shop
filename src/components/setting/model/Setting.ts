@@ -5,7 +5,7 @@ import ISetting from "./ISetting";
 const settingSchema: Schema = new Schema({
   key: { type: String, required: true },
   value: { type: String, required: true },
-  scope: { type: SettingScope, default: SettingScope.PUBLIC },
+  scope: { type: Number, enum: SettingScope, default: SettingScope.PUBLIC },
   version: { type: String },
 });
 

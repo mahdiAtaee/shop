@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import ISetting from "src/components/setting/model/ISetting";
-import SettingScope from "src/components/setting/model/SettingScope";
+import ISetting from "../../components/setting/model/ISetting";
+import SettingScope from "../../components/setting/model/SettingScope";
 import SettingModel from "../../components/setting/model/Setting"
 
 export const create = async (count: number = 1, params?: Partial<ISetting>) => {

@@ -1,14 +1,14 @@
-import { faker } from "@faker-js/faker/.";
-import IAddress from "src/components/users/model/IAddress";
+import { fakerFA as faker } from "@faker-js/faker";
+import IAddress from "../../components/users/model/IAddress";
 
-export async function createAddress(
+export async function create(
   count: number = 1,
   params?: Partial<IAddress>
 ) {
   const addresses: Partial<IAddress>[] = [];
   for (let index = 1; index <= count; index++) {
     addresses.push({
-      title: faker.lorem.sentence(3),
+      title: faker.helpers.arrayElement(['خانه', 'منزل', 'اداره', 'کارگاه']),
       state: faker.location.state(),
       city: faker.location.city(),
       address: faker.location.streetAddress({ useFullAddress: true }),

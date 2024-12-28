@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { fakerFA as faker } from "@faker-js/faker";
 import ProductModel from "../../components/product/model/Product";
 import IUser from "../../components/users/model/IUser";
 import IAttribute from "../../components/category/model/IAttribute";
@@ -8,10 +8,12 @@ import IProductVariation, {
 import IProducts from "../../components/product/model/IProduct";
 import IPriceVariation from "../../components/product/model/IPriceVariation";
 import { create as CategoryFactory } from "./CategoryFactory";
-import IAttributeGroup from "src/components/product/model/IAttributeGroup";
-import IProductAttribute from "src/components/product/model/IProductAttribute";
+import IAttributeGroup from "../../components/product/model/IAttributeGroup";
+import IProductAttribute from "../../components/product/model/IProductAttribute";
+import ProductStatus from "../../components/product/model/productStatus";
 
 const randomNumber: number = Math.round(Math.random() * 10);
+
 
 export async function makeAttributesItem(
   count: number = 1,
@@ -127,13 +129,18 @@ export async function create(count: number = 1, params?: Partial<IUser>) {
       title: faker.commerce.productName(),
       price: faker.commerce.price({ min: 100, max: 900, dec: 0 }),
       discountedPrice: faker.commerce.price({ min: 500, max: 800, dec: 0 }),
-      thumbnail: faker.image.url(),
+      thumbnail: faker.image.dataUri(),
       gallery: [faker.image.url()],
       category: categories[0]._id,
       attributes,
       variation,
       priceVariation,
       stock: faker.number.int(100),
+      status: faker.helpers.arrayElement([
+        ProductStatus.INIT,
+        ProductStatus.INACTIVE,
+        ProductStatus.PUBLISHED
+      ])
     };
     const ProductParams = { ...defaultProductParams, ...params };
     const newProduct = new ProductModel(ProductParams);

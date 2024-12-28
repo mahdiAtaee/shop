@@ -14,7 +14,7 @@ class OrderController {
   public async index(req: Request, res: Response): Promise<void> {
     const orders = await this.OrderRepository.findMany({}, ["user"]);
     const finalOrders = await this.Transformer.collection(orders)
-    res.send({ finalOrders });
+    res.send(finalOrders);
   }
 }
 

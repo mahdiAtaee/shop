@@ -50,7 +50,6 @@ yargs(hideBin(process.argv))
               .catch((error) => console.log(error.message));
             break;
           case "order":
-            console.log(argv)
             OrderFactory(argv.count as unknown as number)
               .then((data) => {
                 console.log("create orders successfully");

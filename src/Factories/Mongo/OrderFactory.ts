@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { fakerFA as faker } from "@faker-js/faker";
 import OrderModel from "../../components/order/model/Order";
 import IOrder from "../../components/order/model/IOrder";
 import IUser from "../../components/users/model/IUser";
@@ -14,13 +14,13 @@ export async function buildOrderLines(
   params?: Partial<IOrderLine>
 ) {
   const orderLines: Partial<IOrderLine>[] = [];
-  const product: IProducts[] = await createProduct(1);
   for (let index = 1; index <= count; index++) {
+    const product: IProducts[] = await createProduct(1);
     orderLines.push({
       product: product[0]._id as unknown as string,
       price: product[0].price,
       discountedPrice: product[0].discountedPrice,
-      count: faker.number.int(),
+      count: faker.number.int({ min: 1, max: 10 }),
     });
   }
   return orderLines;
@@ -28,10 +28,10 @@ export async function buildOrderLines(
 
 export async function create(count: number = 1, params?: Partial<IOrder>) {
   const orders: IOrder[] = [];
-  const user: IUser[] = await createUser(1);
-  const orderLines = await buildOrderLines();
   const coupon = Math.random() > 0.5 ? await createCoupon(1) : null;
   for (let index = 1; index <= count; index++) {
+    const orderLines = await buildOrderLines(faker.number.int({ min: 1, max: 6 }) + 1);
+    const user: IUser[] = await createUser(1);
     const defaultOrderParams = {
       user: user[0]._id,
       totalPrice: orderLines.reduce<number>(
@@ -48,14 +48,11 @@ export async function create(count: number = 1, params?: Partial<IOrder>) {
       deliveryAddress: user[0].addresses,
       status: faker.helpers.arrayElement([
         OrderStatus.INIT as number,
-        OrderStatus.INVENTORY,
         OrderStatus.PAID,
         OrderStatus.DELIVERED,
         OrderStatus.CONFIRMED,
         OrderStatus.CANCELED,
-        OrderStatus.READY,
         OrderStatus.REFUNDED,
-        OrderStatus.SENT,
       ]),
     };
     const orderParams = { ...defaultOrderParams, ...params };

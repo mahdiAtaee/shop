@@ -3,22 +3,60 @@ import IOrderRepository from "./IOrderRepository";
 import OrderModel from "../model/Order";
 import IOrder from "../model/IOrder";
 import { FilterQuery } from "mongoose";
+import IPagination from "../../contracts/IPagination";
+import IUser from "../../users/model/IUser";
+import IUserRepository from "../../users/repositories/IUserRepository";
+import UserMongoRepository from "../../users/repositories/UserMongoRepository";
+import IOrderParams from "../IOrderParams";
 
 export default class OrderMongoRepository implements IOrderRepository {
+  private readonly usersRepository: IUserRepository
+  constructor() {
+    this.usersRepository = new UserMongoRepository()
+  }
+
   public async findByStatus(status: OrderStatus): Promise<IOrder[]> {
     return OrderModel.find({ status });
   }
   public async findOne(ID: string): Promise<IOrder | null> {
     return OrderModel.findById(ID);
   }
-  public async findMany(params: any, relations?: string[]): Promise<IOrder[]> {
-    const orderQuery = OrderModel.find(params)
+  public async findMany(params: IOrderParams, relations?: string[], pagination?: IPagination): Promise<IOrder[]> {
+    const orderQueryParams: IOrderParams = {}
+
+    if (params.user) {
+      const users = await this.usersRepository.findMany({
+        $or: [
+          { firstName: { $regex: params.user } },
+          { lastName: { $regex: params.user } },
+          { email: { $regex: params.user } },
+        ]
+      })
+      orderQueryParams.user = { $in: users.map((user: IUser) => user._id) }
+    }
+
+    const orderQuery = OrderModel.find(orderQueryParams)
+
     if (relations && relations.length > 0) {
       relations.forEach((relation: string) => {
         orderQuery.populate(relation)
       })
     }
+    if (pagination) {
+      orderQuery.limit(pagination.perPage).skip(pagination.offset)
+    }
     return orderQuery.exec()
+  }
+  public async findByUserDetails(userParams: Partial<IUser>, relations?: string[], pagination?: IPagination): Promise<IOrder[]> {
+    const users = await this.usersRepository.findMany({
+      $or: [
+        { firstName: { $regex: userParams.firstName } },
+        { lastName: { $regex: userParams.lastName } },
+        { email: { $regex: userParams.email } },
+      ]
+    })
+    const orders = await this.findMany({ user: { $in: users.map((user: IUser) => user._id) } }, relations, pagination)
+    return orders
   }
   public async create(params: any): Promise<IOrder> {
     const newOrder = new OrderModel({ ...params });

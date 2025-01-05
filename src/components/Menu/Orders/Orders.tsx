@@ -14,6 +14,7 @@ import ListIcon from "@mui/icons-material/List";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Stack from "@mui/material/Stack";
 import Badge from "@mui/material/Badge";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,22 +46,24 @@ const Orders = () => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ListIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.nestedText }}
-              primary="لیست سفارشات"
-            />
-            <Stack
-              spacing="4"
-              direction="row"
-              sx={{ color: "action.active", mr: 2 }}
-            >
-              <Badge color="error" badgeContent={110} max={99} />
-            </Stack>
-          </ListItemButton>
+          <Link to='/orders' className={classes.linkItem}>
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.nestedText }}
+                primary="لیست سفارشات"
+              />
+              <Stack
+                spacing="4"
+                direction="row"
+                sx={{ color: "action.active", mr: 2 }}
+              >
+                <Badge color="error" badgeContent={110} max={99} />
+              </Stack>
+            </ListItemButton>
+          </Link>
         </List>
       </Collapse>
     </>

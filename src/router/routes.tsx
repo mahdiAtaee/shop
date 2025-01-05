@@ -4,6 +4,7 @@ import Products from "../components/Products/Products";
 import Categories from "../components/Categories/Categories";
 import CategoriesEdit from "../components/Categories/CategoriesEdit";
 import ProductsEdit from "../components/Products/ProductsEdit";
+import Orders from "../components/Orders/Orders";
 
 interface routeItem {
   path: string;
@@ -27,6 +28,10 @@ const routes: routeItem[] = [
     path: "/categories/edit",
     component: CategoriesEdit,
   },
+  {
+    path: "/orders",
+    component: Orders
+  }
 ];
 
 const RenderRoutes = () => {

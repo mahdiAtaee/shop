@@ -5,6 +5,7 @@ import Categories from "../components/Categories/Categories";
 import CategoriesEdit from "../components/Categories/CategoriesEdit";
 import ProductsEdit from "../components/Products/ProductsEdit";
 import Orders from "../components/Orders/Orders";
+import OrderDetails from "../components/Orders/OrderDetails";
 
 interface routeItem {
   path: string;
@@ -31,6 +32,10 @@ const routes: routeItem[] = [
   {
     path: "/orders",
     component: Orders
+  },
+  {
+    path: "/orders/:orderID",
+    component: OrderDetails
   }
 ];
 

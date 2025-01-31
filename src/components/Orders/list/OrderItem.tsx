@@ -5,8 +5,10 @@ import { toPersianCurrency } from "../../../services/Currency";
 import { toPersianNumber } from "../../../services/lang";
 import OrderStatus from "../OrderStatus";
 import Status from '../Status'
+import { Link } from "react-router-dom";
 
 const OrderItem = ({
+    id,
     user,
     finalPrice,
     orderLines,
@@ -14,6 +16,8 @@ const OrderItem = ({
     created_at,
     updated_at,
 }: Partial<IOrder>) => {
+    console.log(id);
+    
     return (
         <TableRow>
             <TableCell align="center">{`${user?.firstName} ${user?.lastName}`}</TableCell>
@@ -35,14 +39,11 @@ const OrderItem = ({
             <TableCell align="center">
                 <Stack spacing={1}>
                     <FormControl>
-                        <Button variant="outlined" size="small">
-                            ویرایش
-                        </Button>
-                    </FormControl>
-                    <FormControl>
-                        <Button variant="outlined" size="small" color="error">
-                            حذف
-                        </Button>
+                        <Link to={`/orders/${id}`}>
+                            <Button variant="outlined" size="small">
+                                جزییات
+                            </Button>
+                        </Link>
                     </FormControl>
                 </Stack>
             </TableCell>

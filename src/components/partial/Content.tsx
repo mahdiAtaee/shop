@@ -25,6 +25,7 @@ const Content = ({
   title,
   children,
 }: React.PropsWithChildren<contentProps>) => {
+  document.title = title
   const styles = useStyles();
   return (
     <Paper elevation={0}>

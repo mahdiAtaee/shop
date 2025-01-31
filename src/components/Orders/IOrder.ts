@@ -1,7 +1,8 @@
+import IOrderLine from './IOrderLine';
 import OrderStatus from './OrderStatus'
 
 export default interface IOrder {
-    _id: string;
+    id: string;
     user: {
         firstName: string,
         lastName: string,
@@ -11,7 +12,7 @@ export default interface IOrder {
     finalPrice: number;
     coupon: object;
     deliveryAddress: object;
-    orderLines: object[];
+    orderLines: IOrderLine[];
     created_at: Date;
     updated_at: Date;
     status: OrderStatus;

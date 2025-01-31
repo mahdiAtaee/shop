@@ -9,19 +9,16 @@ interface orderStatusProps {
 const Status = ({ status }: orderStatusProps) => {
     return (
         <>
-            {status == OrderStatus.INIT && (
+            {status == OrderStatus.PENDING && (
                 <Chip label="در حال آماده سازی" color="primary" size="small" />
             )}
             {status == OrderStatus.CANCELED && (
                 <Chip label="لغو شده" color="error" size="small" />
             )}
-            {status == OrderStatus.CONFIRMED && (
-                <Chip label="تایید شده" color="success" size="small" />
-            )}
             {status == OrderStatus.DELIVERED && (
                 <Chip label="تحویل داده شده" color="primary" size="small" />
             )}
-            {status == OrderStatus.PAID && (
+            {status == OrderStatus.PAID_IN_PROGRESS && (
                 <Chip label="‌‌پرداخت شده" color="success" size="small" />
             )}
             {status == OrderStatus.REFUNDED && (

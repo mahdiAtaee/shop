@@ -1,7 +1,6 @@
 enum OrderStatus {
-  INIT,
-  PAID,
-  CONFIRMED,
+  PAID_IN_PROGRESS,
+  PENDING,
   DELIVERED,
   CANCELED,
   REFUNDED,

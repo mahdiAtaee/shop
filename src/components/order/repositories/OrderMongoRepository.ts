@@ -18,8 +18,15 @@ export default class OrderMongoRepository implements IOrderRepository {
   public async findByStatus(status: OrderStatus): Promise<IOrder[]> {
     return OrderModel.find({ status });
   }
-  public async findOne(ID: string): Promise<IOrder | null> {
-    return OrderModel.findById(ID);
+  public async findOne(ID: string, relations?: string[]): Promise<IOrder | null> {
+    const orderQuery = OrderModel.findById(ID)
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation: string) => {
+        orderQuery.populate(relation)
+      })
+    }
+    return orderQuery.exec();
   }
   public async findMany(params: IOrderParams, relations?: string[], pagination?: IPagination): Promise<IOrder[]> {
     const orderQueryParams: IOrderParams = {}

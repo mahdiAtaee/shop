@@ -1,7 +1,7 @@
 import IPagination from "./IPagination";
 
 export default interface IRepository<T> {
-  findOne(ID: string): Promise<T | null>;
+  findOne(ID: string, relations?: string[]): Promise<T | null>;
   findMany(params: any, relations?: string[], pagination?: IPagination): Promise<T[]>;
   create(params: any): Promise<T>;
   updateOne(where: Partial<T>, params: Partial<T>): Promise<boolean>;

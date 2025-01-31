@@ -12,7 +12,7 @@ const orderSchema: Schema = new Schema({
   deliveryAddress: { type: Object, default: null },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  status: { type: String, enum: OrderStatus, default: OrderStatus.INIT },
+  status: { type: String, enum: OrderStatus, default: OrderStatus.PENDING },
 });
 
 export default model<IOrder>("Order", orderSchema);

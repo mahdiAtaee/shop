@@ -7,7 +7,7 @@ const couponSchema: Schema = new Schema({
   percent: { type: Number, required: true },
   limit: { type: Number, default: 0 },
   used: { type: Number, default: 0 },
-  expired_at: { type: Date, default: null },
+  expires_at: { type: Date, default: null },
   constraints: { type: Object, required: true },
   status: { type: Number,enum:CouponStatus, default: CouponStatus.ACTIVE },
 });

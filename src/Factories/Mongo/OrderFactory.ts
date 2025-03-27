@@ -47,10 +47,9 @@ export async function create(count: number = 1, params?: Partial<IOrder>) {
       coupon: coupon ? coupon[0]._id : null,
       deliveryAddress: user[0].addresses,
       status: faker.helpers.arrayElement([
-        OrderStatus.INIT as number,
-        OrderStatus.PAID,
+        OrderStatus.PENDING,
+        OrderStatus.PAID_IN_PROGRESS,
         OrderStatus.DELIVERED,
-        OrderStatus.CONFIRMED,
         OrderStatus.CANCELED,
         OrderStatus.REFUNDED,
       ]),

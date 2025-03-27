@@ -5,4 +5,4 @@ mongoose
   .then(() => {
     console.log("connection is open...");
   })
-  .catch((err) => console.log("faild to connect", err.message));
+  .catch((err) => console.log("failed to connect", err.message));

@@ -7,7 +7,8 @@ export default interface IPayment extends Document {
     amount: number
     reserve: string
     reference: string
-    createdAt: Date
-    updatedAt: Date
+    method: string
+    created_at: Date
+    updated_at: Date
     status: PaymentStatus
 }

@@ -11,7 +11,7 @@ export async function create(count: number = 1, params?: Partial<ICoupon>) {
       percent: faker.number.int(99),
       limit: faker.number.int(10),
       used: 0,
-      expired_at: faker.date
+      expires_at: faker.date
         .future({ years: 10, refDate: "2020-01-01T00:00:00" })
         .toLocaleDateString(),
       constraints: {},

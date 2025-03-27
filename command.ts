@@ -11,6 +11,7 @@ import { create as ProductOfferFactory } from "./src/Factories/Mongo/ProductOffe
 import { create as ShipmentFactory } from "./src/Factories/Mongo/ShipmentFactory";
 import { create as SettingFactory } from "./src/Factories/Mongo/SettingFactory";
 import { create as CommentFactory } from "./src/Factories/Mongo/CommentFactory"
+import { create as PaymentFactory } from './src/Factories/Mongo/PaymentFactory'
 
 yargs(hideBin(process.argv))
   .command(
@@ -91,7 +92,15 @@ yargs(hideBin(process.argv))
                 process.exit();
               })
               .catch((error) => console.log(error.message));
-              break
+            break
+          case "payment":
+            PaymentFactory(argv.count as unknown as number)
+              .then((data) => {
+                console.log("create payments successfully");
+                process.exit();
+              })
+              .catch((error) => console.log(error.message));
+            break
           default:
             break;
         }

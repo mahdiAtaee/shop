@@ -6,6 +6,9 @@ import CategoriesEdit from "../components/Categories/CategoriesEdit";
 import ProductsEdit from "../components/Products/ProductsEdit";
 import Orders from "../components/Orders/Orders";
 import OrderDetails from "../components/Orders/OrderDetails";
+import { Payments } from "../components/Payments/Payments";
+import { Coupons } from "../components/Coupon/Coupons";
+import CreateCoupon from "../components/Coupon/CreateCoupon";
 
 interface routeItem {
   path: string;
@@ -36,6 +39,18 @@ const routes: routeItem[] = [
   {
     path: "/orders/:orderID",
     component: OrderDetails
+  },
+  {
+    path: "/payments",
+    component: Payments
+  },
+  {
+    path: "/coupons",
+    component: Coupons
+  },
+  {
+    path: "/coupons/new",
+    component: CreateCoupon
   }
 ];
 

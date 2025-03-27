@@ -13,6 +13,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +36,7 @@ const Finance = () => {
   const classes = useStyles();
   return (
     <>
-    <ListItemButton onClick={() => setOpen(!open)}>
+      <ListItemButton onClick={() => setOpen(!open)}>
         <ListItemIcon>
           <AccountBalanceWalletIcon />
         </ListItemIcon>
@@ -44,24 +45,28 @@ const Finance = () => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{pl: 4}}>
-            <ListItemIcon>
-              <LocalAtmIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.nestedText }}
-              primary="پرداخت ها"
-            />
-          </ListItemButton>
-          <ListItemButton sx={{pl: 4}}>
-            <ListItemIcon>
-              <MoneyOffIcon />
-            </ListItemIcon>
-            <ListItemText
-              classes={{ primary: classes.nestedText }}
-              primary="کد های تخفیف"
-            />
-          </ListItemButton>
+          <Link className={classes.linkItem} to="/payments">
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <LocalAtmIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.nestedText }}
+                primary="پرداخت ها"
+              />
+            </ListItemButton>
+          </Link>
+          <Link className={classes.linkItem} to="/coupons">
+            <ListItemButton sx={{ pl: 4 }}>
+              <ListItemIcon>
+                <MoneyOffIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.nestedText }}
+                primary="کد های تخفیف"
+              />
+            </ListItemButton>
+          </Link>
         </List>
       </Collapse></>
   )

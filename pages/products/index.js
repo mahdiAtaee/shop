@@ -16,6 +16,7 @@ const products = ({ products }) => {
 
 export async function getStaticProps() {
   const products = await api.get('/products')
+  
   return {
     props: {
       products: products.data

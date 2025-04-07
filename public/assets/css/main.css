@@ -4254,7 +4254,7 @@ bs reset
     direction: rtl;
 }
 
-.card>div:first-of-type{
+.card.product>div:first-of-type{
     width: 100%;
     height: 250px;
 }

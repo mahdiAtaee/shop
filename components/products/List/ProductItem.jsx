@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ProductItem = (product) => {
     const isSpecialOffer = (price, discountedPrice) => {
@@ -7,12 +8,12 @@ const ProductItem = (product) => {
     }
     return (
         <div className="col-md-4">
-            <div className="card border-0 mb-4 box-hover">
+            <div className="card product border-0 mb-4 box-hover">
                 <div className="position-relative">
                     {isSpecialOffer(product.price, product.discountedPrice) && <div className="ft-tag ft-inside-tr">ویژه</div>}
                     <Image
                         className="card-img-top"
-                        src={product.gallery[0]}
+                        src={product.thumbnail}
                         alt="card image"
                         width={200}
                         height={350}
@@ -20,7 +21,9 @@ const ProductItem = (product) => {
                 </div>
                 <div className="card-body py-4 text-center">
                     <h6 className="mb-2 font-size-16">
-                        <a href="#">{product.title}</a>
+                        <Link href={`/products/${product.id}`}>
+                            {product.title}
+                        </Link>
                     </h6>
                     <div className="price mb-3">
                         <del className="text-muted mr-2">

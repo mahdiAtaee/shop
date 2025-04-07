@@ -3,6 +3,7 @@ import ICommentRepository from "./ICommentRepository";
 import CommentModel from "../model/Comment";
 import IComment from "../model/IComment";
 import { FilterQuery } from "mongoose";
+import IPagination from "src/components/contracts/IPagination";
 
 export default class CommentMongoRepository implements ICommentRepository {
   public async findByStatus(status: CommentStatus): Promise<IComment[]> {
@@ -36,5 +37,17 @@ export default class CommentMongoRepository implements ICommentRepository {
   }
   public async deleteMany(where: any): Promise<any> {
     throw new Error("Method not implemented.");
+  }
+
+  public async findByProduct(productID: string, relations?: string[], pagination?: IPagination): Promise<IComment[]> {
+    const commentQuery = CommentModel.find({ product: productID })
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation: string) => {
+        commentQuery.populate(relation)
+      })
+    }
+
+    return commentQuery.exec()
   }
 }

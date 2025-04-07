@@ -27,6 +27,7 @@
     "jalali-moment": "^3.3.11",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.4",
+    "nodemon": "^3.1.9",
     "tedis": "^0.1.12",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",

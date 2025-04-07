@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { fakerFA as faker } from "@faker-js/faker";
 import CommentModel from "../../components/comment/model/Comment";
 import IComment from "../../components/comment/model/IComment";
 import CommentStatus from "../../components/comment/model/CommentStatus";

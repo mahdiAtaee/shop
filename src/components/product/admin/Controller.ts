@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { UploadedFile } from "express-fileupload";
 import path = require("path");
-import IProductRepository from "./repositories/IProductRepository";
-import ProductMongoRepository from "./repositories/ProductMongoRepository";
-import UploadService from "../../services/UploadService";
-import ProductTransformer from "./ProductTransformer";
+import IProductRepository from "../repositories/IProductRepository";
+import ProductMongoRepository from "../repositories/ProductMongoRepository";
+import UploadService from "../../../services/UploadService";
+import ProductTransformer from "./Transformer";
 
-class ProductController {
+class Controller {
   private productRepository: IProductRepository;
   private uploadService: UploadService;
   private productTransformer: ProductTransformer;
@@ -54,4 +54,4 @@ class ProductController {
   }
 }
 
-export default ProductController;
+export default Controller;

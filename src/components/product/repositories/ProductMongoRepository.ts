@@ -3,16 +3,37 @@ import IProductRepository from "./IProductRepository";
 import ProductModel from "../model/Product";
 import IProducts from "../model/IProduct";
 import { FilterQuery } from "mongoose";
+import IPagination from "../../contracts/IPagination";
 
 export default class ProductMongoRepository implements IProductRepository {
   public async findByStatus(status: ProductStatus): Promise<IProducts[]> {
     return ProductModel.find({ status });
   }
-  public async findOne(ID: string): Promise<IProducts | null> {
-    return ProductModel.findById(ID);
+  public async findOne(ID: string, relations?: string[]): Promise<IProducts | null> {
+    const productQuery = ProductModel.findOne({ _id: ID })
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation: string) => {
+        productQuery.populate(relation)
+      })
+    }
+
+    return productQuery.exec();
   }
-  public async findMany(params: any): Promise<IProducts[]> {
-    return ProductModel.find(params);
+  public async findMany(params: any, relations?: string[], pagination?: IPagination): Promise<IProducts[]> {
+    const productQuery = ProductModel.find({})
+
+    if (relations && relations.length > 0) {
+      relations.forEach((relation: string) => {
+        productQuery.populate(relation)
+      })
+    }
+
+    if (pagination) {
+      productQuery.limit(pagination.perPage).skip(pagination.offset)
+    }
+
+    return productQuery.exec();
   }
   public async create(params: any): Promise<IProducts> {
     const newProduct = new ProductModel({ ...params });

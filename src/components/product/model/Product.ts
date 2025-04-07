@@ -9,7 +9,7 @@ const ProductSchema: Schema = new Schema({
   discountedPrice: { type: Number, default: 0 },
   thumbnail: { type: String },
   gallery: { type: [String] },
-  category: { type: Schema.Types.ObjectId, ref: "ProductCategory" },
+  category: { type: Schema.Types.ObjectId, ref: "Categories" },
   attributes: { type: [Object], required: true },
   variation: { type: [Object] },
   priceVariation: { type: [Object] },
@@ -18,15 +18,15 @@ const ProductSchema: Schema = new Schema({
   status: { type: String, enum: ProductStatus, default: ProductStatus.INIT },
 });
 
-ProductSchema.virtual('thumbnailUrl').get(function (this:IProducts) {
-  return `${process.env.APP_URL}/contents/${this.thumbnail}`
-})
+// ProductSchema.virtual('thumbnailUrl').get(function (this:IProducts) {
+//   return `${process.env.APP_URL}/contents/${this.thumbnail}`
+// })
 
 
-ProductSchema.virtual('galleryUrl').get(function (this:IProducts) {
-  return this.gallery?.map((item:string) => {
-    return `${process.env.APP_URL}/contents/${item}`
-  })
-})
+// ProductSchema.virtual('galleryUrl').get(function (this:IProducts) {
+//   return this.gallery?.map((item:string) => {
+//     return `${process.env.APP_URL}/contents/${item}`
+//   })
+// })
 
 export default model<IProducts>("Product", ProductSchema);

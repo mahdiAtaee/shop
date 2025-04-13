@@ -18,8 +18,6 @@ const Gallery = ({ images }) => {
             navigation
             autoplay
             pagination={{ clickable: true }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log('slide change')}
         >
             {images.map((image, index) => (
                 <SwiperSlide key={index}>

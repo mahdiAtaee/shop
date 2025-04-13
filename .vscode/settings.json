@@ -1,5 +1,9 @@
 {
-    "editor.fontFamily": "Operator Mono SSm Lig",
+    "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "editor.fontWeight": "500",
+    "editor.cursorWidth": 1,
+    "editor.fontSize": 16,
+    "editor.wordWrapColumn": 80,
+    "editor.lineHeight": 2,
 }

@@ -1,7 +1,25 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import useAppContext from '@/context/useAppContext'
+import React, { useState } from 'react'
 
 const Details = ({ product }) => {
+    const [itemCount, setItemCount] = useState(1)
+    const { dispatch } = useAppContext()
+
+    const AddToBasket = () => {
+        dispatch({
+            type: "ADD_TO_BASKET",
+            payload: {
+                productID: product.id,
+                price: product.price,
+                discountedPrice: product.discountedPrice,
+                title: product.title,
+                thumbnail: product.thumbnail,
+                count: itemCount
+            }
+        })
+    }
+
     return (
         <>
             <h3 className="mb-3">{product.title}</h3>
@@ -22,8 +40,9 @@ const Details = ({ product }) => {
                     type="number"
                     className="form-control form-qty mr-2 w-25"
                     placeholder={1}
+                    onChange={() => { setItemCount(prev => (prev + 1)) }}
                 />
-                <button type="submit" className="btn btn-primary">
+                <button type="button" onClick={AddToBasket} className="btn btn-primary">
                     <i className="fa fa-shopping-cart pr-3" />
                     افزودن به سبد خرید
                 </button>

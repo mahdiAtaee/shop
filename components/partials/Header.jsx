@@ -1,7 +1,11 @@
 import React from 'react'
 import Menu from './Menu'
+import useAppContext from '@/context/useAppContext'
+import Link from 'next/link'
 
 const Header = () => {
+    const { state } = useAppContext()
+    
     return (
         <>
             <section className="py-2 bg-gray">
@@ -54,9 +58,10 @@ const Header = () => {
                                     </a>
                                 </div>
                             </div>
-                            <a href="#" className="text-decoration-none text-dark ml-2">
+                            <Link href='/basket' className="text-decoration-none text-dark ml-2">
                                 <i className="vl-cart1" />
-                            </a>
+                                {state?.basket.length}
+                            </Link>
                         </div>
                     </div>
                 </div>

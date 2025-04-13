@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 import Head from 'next/head'
 import React, { useEffect } from 'react'
-import ShopHeader from '../partials/Header'
-import ShopFooter from '../partials/Footer'
 import useAppContext from '@/context/useAppContext'
 
-const Shop = ({ children, title }) => {
+const Auth = ({ children, title }) => {
     const { dispatch } = useAppContext()
 
     useEffect(() => {
@@ -33,11 +31,9 @@ const Shop = ({ children, title }) => {
                 <meta name="description" content="" />
                 <meta name="author" content="mahdi" />
             </Head>
-            <ShopHeader />
             {children}
-            <ShopFooter />
         </div>
     )
 }
 
-export default Shop
+export default Auth

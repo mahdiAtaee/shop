@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import ICouponRepository from "./repository/ICouponRepository";
-import CouponMongoRepository from "./repository/CouponMongoRepository";
-import ITransformer from "../contracts/ITransformer";
-import ICoupon from "./model/ICoupon";
+import ICouponRepository from "../repository/ICouponRepository";
+import CouponMongoRepository from "../repository/CouponMongoRepository";
+import ITransformer from "../../contracts/ITransformer";
+import ICoupon from "../model/ICoupon";
 import CouponTransformer from "./CouponTransformer";
 
 export default class CouponController {

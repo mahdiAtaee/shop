@@ -28,7 +28,6 @@ export default class CommentTransformer implements ITransformer<IComments> {
         if (!user) {
             return null
         }
-        console.log(user);
         
         return {
             firstName: user.firstName,

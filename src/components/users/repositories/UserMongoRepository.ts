@@ -4,6 +4,9 @@ import IUserRepository from "./IUserRepository";
 import UserModel from "../model/User";
 
 export default class UserMongoRepository implements IUserRepository {
+  findByEmail(email: string, relations?: string[]): Promise<IUser | null> {
+    return UserModel.findOne({ email })
+  }
   public async findOne(ID: string): Promise<IUser | null> {
     return UserModel.findById(ID);
   }

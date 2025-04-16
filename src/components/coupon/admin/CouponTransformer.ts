@@ -1,6 +1,6 @@
-import ICoupon from "./model/ICoupon";
-import ITransformer from "../contracts/ITransformer";
-import DateService from "../../services/DateService";
+import ICoupon from "../model/ICoupon";
+import ITransformer from "../../contracts/ITransformer";
+import DateService from "../../../services/DateService";
 
 
 export default class CouponTransformer implements ITransformer<ICoupon> {

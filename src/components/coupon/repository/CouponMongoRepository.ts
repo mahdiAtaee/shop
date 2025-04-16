@@ -81,4 +81,8 @@ export default class CouponMongoRepository implements ICouponRepository {
         throw new Error("Method not implemented.");
     }
 
+    findByCode(code: string): Promise<ICoupon | null> {
+        return Coupon.findOne({ code })
+    }
+
 }

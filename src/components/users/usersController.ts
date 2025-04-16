@@ -10,6 +10,7 @@ class UsersController {
       first_name: "mahdi",
       last_name: "ataee",
       mobile: "09301234567",
+      password: "pass1234",
       email: "Mahdi@gmail.com",
     });
     newUser.addresses.push({
@@ -19,7 +20,7 @@ class UsersController {
       address: "تهران بومهن خیابان ازادواری",
       zip_code: "1234567890",
       full_name: "مهدی عطایی",
-      moblie: "09123456789",
+      mobile: "09123456789",
     });
     await newUser.save();
     res.send({

@@ -6,8 +6,9 @@ import productRouter from "../components/product/front/Router";
 import CategoryRouter from "../components/category/CategoryRouter";
 import OrderRouter from "../components/order/OrderRouter"
 import PaymentRouter from "../components/payment/PaymentRouter"
-import CouponRouter from '../components/coupon/CouponRouter'
-
+import CouponAdminRouter from '../components/coupon/admin/CouponRouter'
+import CouponRouter from '../components/coupon/front/Router'
+import authRouter from '../components/auth/authRouter'
 class RouteService {
   public app: Application;
   private router: RouteEngine;
@@ -21,10 +22,11 @@ class RouteService {
   public bindRouter() {
     //admin
     this.router.registerRouter("/api/v1/admin/products", productAdminRouter);
+    this.router.registerRouter("/api/v1/admin/coupons", CouponAdminRouter)
 
     //front
     this.router.registerRouter("/api/v1/products", productRouter);
-
+    this.router.registerRouter("/api/v1/auth", authRouter)
     this.router.registerRouter("/api/v1/users", usersRouter);
     this.router.registerRouter("/api/v1/categories", CategoryRouter)
     this.router.registerRouter("/api/v1/orders", OrderRouter)

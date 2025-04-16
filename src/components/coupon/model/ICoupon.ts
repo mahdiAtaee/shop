@@ -7,6 +7,9 @@ export default interface ICoupon extends Document {
   limit: number;
   used: number;
   expires_at: Date;
-  constraints: Object;
+  constraints: {
+    users: string[],
+    products: string[]
+  };
   status: CouponStatus;
 }

@@ -3,15 +3,15 @@ import CouponHandler from "./CouponHandler";
 import ICoupon from "src/components/coupon/model/ICoupon";
 
 abstract class AbstractCouponHandler implements CouponHandler {
-  private nextHandler: CouponHandler;
+  private nextHandler: CouponHandler | null = null;
 
   public setNext(Handler: CouponHandler): CouponHandler {
     this.nextHandler = Handler;
     return Handler;
   }
-  public process(user: IUser, coupon: ICoupon): ICoupon | null {
+  public process(coupon: ICoupon, user?: IUser): ICoupon | null {
     if (this.nextHandler) {
-      return this.nextHandler.process(user, coupon);
+      return this.nextHandler.process(coupon, user);
     }
     return null;
   }

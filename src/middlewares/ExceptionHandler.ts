@@ -1,9 +1,12 @@
 import { Application, NextFunction, Request, Response } from "express";
+import Exception from "../components/exceptions/Exception";
 
 export default function ExceptionHandler(app: Application) {
-  app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(403).send({
-      statusCode: 403,
+  app.use((error: Exception, req: Request, res: Response, next: NextFunction) => {
+    console.log(error);
+    
+    res.status(error.status).send({
+      statusCode: error.status,
       error: true,
       message: error.message,
     });

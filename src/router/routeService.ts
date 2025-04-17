@@ -1,6 +1,7 @@
 import { Application, Router } from "express";
 import RouteEngine from "./router";
-import usersRouter from "../components/users/usersRouter";
+import usersAdminRouter from "../components/users/admin/usersRouter";
+import usersRouter from "../components/users/front/Router"
 import productAdminRouter from "../components/product/admin/Router";
 import productRouter from "../components/product/front/Router";
 import CategoryRouter from "../components/category/CategoryRouter";
@@ -23,6 +24,7 @@ class RouteService {
     //admin
     this.router.registerRouter("/api/v1/admin/products", productAdminRouter);
     this.router.registerRouter("/api/v1/admin/coupons", CouponAdminRouter)
+    this.router.registerRouter("/api/v1/admin/users", usersAdminRouter)
 
     //front
     this.router.registerRouter("/api/v1/products", productRouter);

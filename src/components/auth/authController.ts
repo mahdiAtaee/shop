@@ -3,7 +3,7 @@ import AuthService from "../../services/AuthService";
 import { hashPassword } from "../../services/HashService";
 import User from "../users/model/User";
 import { sign, verify } from "../../services/JWTService";
-import UsersTransformer from "../users/usersTransformer";
+import UsersTransformer from "../users/admin/usersTransformer";
 import IUser from "../users/model/IUser";
 
 class authController {

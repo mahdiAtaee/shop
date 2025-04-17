@@ -12,8 +12,8 @@ export async function create(
       state: faker.location.state(),
       city: faker.location.city(),
       address: faker.location.streetAddress({ useFullAddress: true }),
-      zip_code: faker.location.zipCode(),
-      full_name: faker.person.fullName(),
+      zipCode: faker.location.zipCode(),
+      fullName: faker.person.fullName(),
       mobile: faker.phone.number(),
     });
   }

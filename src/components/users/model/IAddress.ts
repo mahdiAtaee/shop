@@ -3,7 +3,7 @@ export default interface IAddress {
   state: string;
   city: string;
   address: string;
-  zip_code: string;
-  full_name: string;
+  zipCode: string;
+  fullName: string;
   mobile: string;
 }

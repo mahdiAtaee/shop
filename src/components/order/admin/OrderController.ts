@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import OrderMongoRepository from "./repositories/OrderMongoRepository";
+import OrderMongoRepository from "../repositories/OrderMongoRepository";
 import OrderTransformer from './OrderTransformer'
-import IOrder from "./model/IOrder";
-import NotFoundException from "../exceptions/NotFoundException";
-import OrderService from "./orderService";
+import IOrder from "../model/IOrder";
+import NotFoundException from "../../exceptions/NotFoundException";
+import OrderService from "../services/orderService";
 
 class OrderController {
   private readonly OrderRepository: OrderMongoRepository;

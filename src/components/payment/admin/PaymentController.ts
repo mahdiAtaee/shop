@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import IPaymentRepository from "./repositories/IPaymentRepository";
-import PaymentMongoRepository from "./repositories/PaymentMongoRepository";
-import ITransformer from "../contracts/ITransformer";
-import IPayment from "./model/IPayment";
+import IPaymentRepository from "../repositories/IPaymentRepository";
+import PaymentMongoRepository from "../repositories/PaymentMongoRepository";
+import ITransformer from "../../contracts/ITransformer";
+import IPayment from "../model/IPayment";
 import PaymentTransformer from "./PaymentTransformer";
 
 export default class PaymentController {

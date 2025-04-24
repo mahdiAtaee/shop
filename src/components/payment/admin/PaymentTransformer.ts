@@ -1,6 +1,6 @@
-import IPayment from "./model/IPayment";
-import ITransformer from "../contracts/ITransformer";
-import DateService from "../../services/DateService";
+import IPayment from "../model/IPayment";
+import ITransformer from "../../contracts/ITransformer";
+import DateService from "../../../services/DateService";
 
 
 export default class PaymentTransformer implements ITransformer<IPayment> {

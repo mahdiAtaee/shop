@@ -19,6 +19,7 @@
     "@types/node": "^22.5.0",
     "@types/nodemon": "^1.19.6",
     "@types/yargs": "^17.0.33",
+    "@types/zarinpal-checkout": "^0.2.5",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
@@ -36,7 +37,8 @@
     "typescript": "^5.5.4",
     "uuid": "^11.0.3",
     "yargs": "^17.7.2",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "zarinpal-checkout": "^0.3.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",

@@ -5,8 +5,10 @@ import usersRouter from "../components/users/front/Router"
 import productAdminRouter from "../components/product/admin/Router";
 import productRouter from "../components/product/front/Router";
 import CategoryRouter from "../components/category/CategoryRouter";
-import OrderRouter from "../components/order/OrderRouter"
-import PaymentRouter from "../components/payment/PaymentRouter"
+import OrderRouter from "../components/order/front/Router"
+import OrderAdminRouter from "../components/order/admin/OrderRouter"
+import paymentAdminRouter from "../components/payment/admin/PaymentRouter"
+import paymentRouter from "../components/payment/front/Router"
 import CouponAdminRouter from '../components/coupon/admin/CouponRouter'
 import CouponRouter from '../components/coupon/front/Router'
 import authRouter from '../components/auth/authRouter'
@@ -25,6 +27,8 @@ class RouteService {
     this.router.registerRouter("/api/v1/admin/products", productAdminRouter);
     this.router.registerRouter("/api/v1/admin/coupons", CouponAdminRouter)
     this.router.registerRouter("/api/v1/admin/users", usersAdminRouter)
+    this.router.registerRouter("/api/v1/admin/payments", paymentAdminRouter)
+    this.router.registerRouter("/api/v1/admin/orders", OrderAdminRouter)
 
     //front
     this.router.registerRouter("/api/v1/products", productRouter);
@@ -32,7 +36,7 @@ class RouteService {
     this.router.registerRouter("/api/v1/users", usersRouter);
     this.router.registerRouter("/api/v1/categories", CategoryRouter)
     this.router.registerRouter("/api/v1/orders", OrderRouter)
-    this.router.registerRouter("/api/v1/payments", PaymentRouter)
+    this.router.registerRouter("/api/v1/payments", paymentRouter)
     this.router.registerRouter("/api/v1/coupons", CouponRouter)
   }
 

@@ -1,34 +1,29 @@
 import React, { useState } from 'react'
 import AuthLayout from '@/components/layouts/Auth'
-import { login } from '@/services/auth'
+import { register } from '@/services/auth'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import useAppContext from '@/context/useAppContext'
 
 const Login = () => {
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-    const { state, dispatch } = useAppContext()
 
-    const handleLogin = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
         if (email.length < 1 && password.length < 1) {
             alert('ایمیل و رمزعبور اجباری می باشد')
             return false
         }
-        const [result, token, user] = await login(email, password)
+        const result = await register({ firstName, lastName, email, password })
+        
+        
         if (result) {
-            localStorage.setItem('token', token)
-            dispatch({
-                type: "SET_CURRENT_USER",
-                payload: {
-                    user
-                }
-            })
-            router.push('/checkout')
+            router.push('/auth/login')
         } else {
-            alert('کاربری با این مشخصات در سایت پیدا نشد')
+            alert('در فرایند ثبت نام مشکلی رخ داده است. لطفا دوباره امتحان نمایید')
         }
     }
 
@@ -48,6 +43,22 @@ const Login = () => {
                                             alt=""
                                         />
                                         <form>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    onChange={(e) => setFirstName(e.target.value)}
+                                                    className="form-control"
+                                                    placeholder="نام"
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    onChange={(e) => setLastName(e.target.value)}
+                                                    className="form-control"
+                                                    placeholder="نام خانوادگی"
+                                                />
+                                            </div>
                                             <div className="form-group">
                                                 <input
                                                     type="email"
@@ -86,12 +97,12 @@ const Login = () => {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <button onClick={handleLogin} className="btn btn-theme">
-                                                    ورود
+                                                <button onClick={handleRegister} className="btn btn-theme">
+                                                    ثبت نام
                                                 </button>
                                             </div>
                                             <div className="form-group mt-lg-5">
-                                                <Link href='/auth/register'>ثبت نام</Link>
+                                                <Link href='/auth/login'>ورود</Link>
                                             </div>
                                         </form>
                                     </div>

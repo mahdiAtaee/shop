@@ -1,6 +1,12 @@
 const initState = {
     basket: [],
-    coupon: null
+    coupon: {
+        percent: 0,
+        code: ''
+    },
+    user: {},
+    delivery_address: null,
+    payment_method: "zarinpal"
 }
 
 export default initState

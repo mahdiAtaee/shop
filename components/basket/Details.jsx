@@ -23,13 +23,13 @@ const Details = () => {
                     <div className="col-4">{toPersianNumber(TotalBasket())} تومان</div>
                 </div>
                 <div className="row mb-1">
-                    <div className="col-8 font-weight-normal">تخفیف ({toPersianNumber(state.coupon.percent)}%)</div>
-                    <div className="col-4">- {toPersianNumber(calculateDiscountAmount(TotalBasket(), state.coupon.percent).toFixed(0))} تومان</div>
+                    <div className="col-8 font-weight-normal">تخفیف ({state.coupon !== null && state.coupon ? toPersianNumber(state?.coupon?.percent) : 0}%)</div>
+                    <div className="col-4">- {toPersianNumber(calculateDiscountAmount(TotalBasket(), (state.coupon !== null && state.coupon !== undefined ? state.coupon.percent : 0)).toFixed(0))} تومان</div>
                 </div>
                 <div className="row my-4">
                     <div className="col-8">مجموع خرید</div>
                     <div className="col-4">
-                        <strong>{toPersianNumber(amountWithDiscount(TotalBasket(), state.coupon.percent).toFixed(0))} تومان</strong>
+                        <strong>{toPersianNumber(amountWithDiscount(TotalBasket(), (state.coupon !== null && state.coupon ? state.coupon.percent : 0)).toFixed(0))} تومان</strong>
                     </div>
                 </div>
                 <Link href="/checkout" className="btn btn-pill btn-block btn-theme">

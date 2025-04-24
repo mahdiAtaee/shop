@@ -34,7 +34,35 @@ export default function reducer(state, action) {
                 coupon: { ...action.payload }
             }
             break
+        case "SET_CURRENT_USER":
+            newState = { ...state, user: action.payload.user }
+            break
+        case "ADD_ADDRESS":
+            newState = {
+                ...state,
+                user: {
+                    ...state.user,
+                    addresses: [
+                        ...state.user.addresses,
+                        { ...action.payload.address }
+                    ]
+                }
+            }
+            break
+        case "UPDATE_DELIVERY_ADDRESS":
+            newState = {
+                ...state,
+                delivery_address: action.payload.address
+            }
+            break
+        case "UPDATE_PAYMENT_METHOD":
+            newState = {
+                ...state,
+                payment_method: action.payload.method
+            }
+            break
         default:
+            newState = state
             break;
     }
     localStorage.setItem('state', JSON.stringify(newState))

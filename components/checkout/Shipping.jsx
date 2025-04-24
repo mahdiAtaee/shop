@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import * as AUTH from '@/services/auth'
 import AuthLink from '../partials/AuthLink'
-import Address from './Address'
+import Addresses from './Addresses'
+import useAppContext from '@/context/useAppContext'
+import PaymentForm from './PaymentForm'
+import * as API from '@/services/api'
+
 
 const Shipping = () => {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+    const [gateways, setGateways] = useState([])
+    const { state } = useAppContext()
+    let isUserLoggedIn
+    if (state.user) {
+        isUserLoggedIn = !!state.user.id
+    }
 
     useEffect(() => {
-        const authCheck = () => {
-            AUTH.check()
-                .then(status => setIsUserLoggedIn(status))
+        const fetchGateways = () => {
+            API.get('/payments/gateways')
+                .then(response => {
+                    setGateways(response.data.Gateways)
+                })
                 .catch(error => console.log(error))
         }
-        authCheck()
+        fetchGateways()
     }, [])
+
+
 
     return (
         <div className="col-md-8 order-md-1">
-            <h5 className="mb-4">انتخاب آدرس ارسال</h5>
-            {isUserLoggedIn ? <Address /> : <AuthLink />}
+            <div className="card border-0 row no-gutters p-3 box-hover">
+                {isUserLoggedIn && <Addresses addresses={state.user.addresses} />}
+                {isUserLoggedIn && <PaymentForm gateways={gateways} />}
+                {!isUserLoggedIn && <AuthLink />}
+            </div>
         </div>
     )
 }

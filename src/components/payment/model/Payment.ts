@@ -8,7 +8,7 @@ const paymentSchema: Schema = new Schema({
   amount: { type: Number, required: true },
   method: { type: String, required: true },
   reserve: { type: String, required: true },
-  reference: { type: String, required: true },
+  reference: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   status: {

@@ -1,42 +1,62 @@
 /* eslint-disable react/prop-types */
-import React,{ useState, useEffect } from 'react';
+import { get } from '@/services/api';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { IoIosArrowDown } from "react-icons/io";
-// Lazy load components that might cause hydration issues
-// const HamburgerMenu = dynamic(
-//     () => import('./HamburgerMenu'),
-//     { ssr: false }
-// );
+import _ from 'lodash';
 
 const Menu = () => {
     const [isMounted, setIsMounted] = useState(false);
-
+    const [categories, setCategories] = useState([])
     useEffect(() => {
+        const fetchCategories = async () => {
+            const { data } = await get('/categories')
+            setCategories(_.chunk(data.categories, 8))
+        }
+        fetchCategories()
         setIsMounted(true);
     }, []);
 
     const menuItems = [
         {
             title: 'خانه',
-            submenu: [
-                {
-                    title: 'صفحات فرود',
-                    icon: 'vl-pop-corn',
-                    href: 'page-landing.html'
-                },
-                {
-                    title: 'صفحات داخلی',
-                    icon: 'vl-layer',
-                    href: 'page-landing.html'
-                },
-                {
-                    title: 'صفحات خارجی',
-                    icon: 'vl-gear',
-                    href: 'page-landing.html'
-                },
-            ]
+            submenu: [{
+                subItem: [
+                    {
+                        title: 'صفحات فرود',
+                        icon: 'vl-pop-corn',
+                        href: 'page-landing.html'
+                    },
+                    {
+                        title: 'صفحات داخلی',
+                        icon: 'vl-layer',
+                        href: 'page-landing.html'
+                    },
+                    {
+                        title: 'صفحات خارجی',
+                        icon: 'vl-gear',
+                        href: 'page-landing.html'
+                    },
+                ]
+            }]
+        }, {
+            title: 'درباره ما',
         },
+        {
+            title: 'پشتیبانی'
+        },
+        {
+            title: 'دسته بندی',
+            submenu: categories.map((chunkedCategory) => ({
+                subItem: chunkedCategory.map(category => ({
+                    title: category.title,
+                    icon: 'vl-layer',
+                    href: `category/${category.slug}`
+                }))
+            }))
+        }
     ];
+
 
     if (!isMounted) {
         // Return minimal server render
@@ -69,7 +89,7 @@ const Menu = () => {
                                 <Image
                                     src="/assets/img/logo-dark.png"
                                     alt="CLab"
-                                    style={{objectFit: 'none'}}
+                                    style={{ objectFit: 'none' }}
                                     width={120}
                                     height={40}
                                     priority
@@ -83,11 +103,11 @@ const Menu = () => {
                                     href="https://www.rtl-theme.com/user-profile/tn_plugin/"
                                     className="btn btn-sm btn-pill btn-theme mt-3"
                                 >
-                                    همین حالا بخرید
+                                    محصولات
                                 </a>
                             </ul>
 
-                            <ul className="vlmenu light-sub-menu slide-effect float-right fade-effect">
+                            <ul className="vlmenu light-sub-menu  float-right fade-effect">
                                 {menuItems.map((item, index) => (
                                     <MenuItem key={index} item={item} />
                                 ))}
@@ -105,29 +125,34 @@ const MenuItem = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <li>
-            <a href="#" onClick={() => setIsOpen(!isOpen)}>
+        <li onMouseEnter={() => setIsOpen(!isOpen)}>
+            <a href="#" >
                 {item.title}
                 {item.submenu && (
                     <>
-                        <IoIosArrowDown />
+                        <IoIosArrowDown className='align-sub' />
                     </>
                 )}
             </a>
 
             {item.submenu && isOpen && (
-                <ul>
-                    {item.submenu.map((subItem, subIndex) => (
-                        <li key={subIndex}>
-                            <a href={subItem.href} className="d-flex">
-                                <i className={`${subItem.icon} font-size-20`} />
-                                <span className="font-weight-700">{subItem.title}</span>
-                            </a>
-                        </li>
+                <ul className='container w-100 d-flex align-items-center justify-content-around position-absolute left-0 top-0' style={{ left: 0 }}>
+                    {item.submenu.map((subMenuItem, subIndex) => (
+                        <div key={subIndex}>
+                            {subMenuItem.subItem && subMenuItem.subItem.map(itemchunk => (
+                                <li key={subIndex} >
+                                    <a href={itemchunk.href} className="d-flex">
+                                        <i className={`${itemchunk.icon} font-size-20`} />
+                                        <span className="font-weight-700">{itemchunk.title}</span>
+                                    </a>
+                                </li>
+                            ))}
+                        </div>
                     ))}
                 </ul>
-            )}
-        </li>
+            )
+            }
+        </li >
     );
 };
 

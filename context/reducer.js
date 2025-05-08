@@ -61,6 +61,15 @@ export default function reducer(state, action) {
                 payment_method: action.payload.method
             }
             break
+        case "LOGOUT":
+            newState = {
+                ...state,
+                user: null,
+                coupon: null,
+                delivery_address: null,
+                payment_method: null
+            }
+            break
         default:
             newState = state
             break;

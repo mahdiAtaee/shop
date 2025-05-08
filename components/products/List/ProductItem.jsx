@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ProductItem = (product) => {
+const ProductItem = (product) => {    
     const isSpecialOffer = (price, discountedPrice) => {
         return discountedPrice && discountedPrice > 0 && discountedPrice < price
     }

@@ -18,6 +18,8 @@ export default class Transformer implements ITransformer<IProducts> {
       discountedPrice: item.discountedPrice,
       thumbnail: item.thumbnail,
       gallery: item.gallery,
+      variations: item.variation,
+      priceVariations: item.priceVariation
     };
   }
   collection(items: IProducts[]) {

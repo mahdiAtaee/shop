@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Category from "./model/Category";
+import Category from "../model/Category";
 
 class CategoryController {
   constructor() {}

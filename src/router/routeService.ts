@@ -4,7 +4,8 @@ import usersAdminRouter from "../components/users/admin/usersRouter";
 import usersRouter from "../components/users/front/Router"
 import productAdminRouter from "../components/product/admin/Router";
 import productRouter from "../components/product/front/Router";
-import CategoryRouter from "../components/category/CategoryRouter";
+import CategoryAdminRouter from "../components/category/admin/CategoryRouter";
+import categoryRouter from "../components/category/front/Router";
 import OrderRouter from "../components/order/front/Router"
 import OrderAdminRouter from "../components/order/admin/OrderRouter"
 import paymentAdminRouter from "../components/payment/admin/PaymentRouter"
@@ -13,6 +14,8 @@ import CouponAdminRouter from '../components/coupon/admin/CouponRouter'
 import CouponRouter from '../components/coupon/front/Router'
 import authRouter from '../components/auth/authRouter'
 import purchaseRouter from '../components/purchase/Router'
+import HomeRouter from '../components/home/Router'
+
 class RouteService {
   public app: Application;
   private router: RouteEngine;
@@ -30,15 +33,18 @@ class RouteService {
     this.router.registerRouter("/api/v1/admin/users", usersAdminRouter)
     this.router.registerRouter("/api/v1/admin/payments", paymentAdminRouter)
     this.router.registerRouter("/api/v1/admin/orders", OrderAdminRouter)
+    this.router.registerRouter("/api/v1/admin/categories", CategoryAdminRouter)
 
     //front
     this.router.registerRouter("/api/v1/products", productRouter);
     this.router.registerRouter("/api/v1/auth", authRouter)
     this.router.registerRouter("/api/v1/users", usersRouter);
-    this.router.registerRouter("/api/v1/categories", CategoryRouter)
+    this.router.registerRouter("/api/v1/categories", categoryRouter);
     this.router.registerRouter("/api/v1/purchase", purchaseRouter)
     this.router.registerRouter("/api/v1/payments", paymentRouter)
     this.router.registerRouter("/api/v1/coupons", CouponRouter)
+    this.router.registerRouter("/api/v1/home", HomeRouter)
+    this.router.registerRouter("/api/v1/orders", OrderRouter);
   }
 
   public run() {

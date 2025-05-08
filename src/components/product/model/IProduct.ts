@@ -20,5 +20,9 @@ export default interface IProducts extends Document {
   created_at: Date;
   updated_at: Date;
   stock: number;
+  purchase_count: number,
+  comments_count: number,
+  total_score: number,
+  views_count: number,
   status: ProductStatus;
 }

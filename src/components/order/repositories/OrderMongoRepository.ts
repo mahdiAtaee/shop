@@ -2,7 +2,7 @@ import OrderStatus from "../model/OrderStatus";
 import IOrderRepository from "./IOrderRepository";
 import OrderModel from "../model/Order";
 import IOrder from "../model/IOrder";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, Types } from "mongoose";
 import IPagination from "../../contracts/IPagination";
 import IUser from "../../users/model/IUser";
 import IUserRepository from "../../users/repositories/IUserRepository";
@@ -31,7 +31,7 @@ export default class OrderMongoRepository implements IOrderRepository {
   public async findMany(params: IOrderParams, relations?: string[], pagination?: IPagination): Promise<IOrder[]> {
     const orderQueryParams: IOrderParams = {}
 
-    if (params.user) {
+    if (params.user_data) {
       const users = await this.usersRepository.findMany({
         $or: [
           { firstName: { $regex: params.user } },
@@ -40,6 +40,11 @@ export default class OrderMongoRepository implements IOrderRepository {
         ]
       })
       orderQueryParams.user = { $in: users.map((user: IUser) => user._id) }
+    }
+
+    if (params.user) {
+      const objectID = Types.ObjectId
+      orderQueryParams.user = new objectID(params.user)
     }
 
     const orderQuery = OrderModel.find(orderQueryParams)

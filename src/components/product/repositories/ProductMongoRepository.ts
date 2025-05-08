@@ -4,7 +4,8 @@ import ProductModel from "../model/Product";
 import IProducts from "../model/IProduct";
 import { FilterQuery } from "mongoose";
 import IPagination from "../../contracts/IPagination";
-
+import { Types } from "mongoose";
+import IObjectParams from "../../contracts/IObjectParams";
 export default class ProductMongoRepository implements IProductRepository {
   public async findByStatus(status: ProductStatus): Promise<IProducts[]> {
     return ProductModel.find({ status });
@@ -20,8 +21,18 @@ export default class ProductMongoRepository implements IProductRepository {
 
     return productQuery.exec();
   }
-  public async findMany(params: any, relations?: string[], pagination?: IPagination): Promise<IProducts[]> {
-    const productQuery = ProductModel.find({})
+  public async findMany(params: any, relations?: string[], pagination?: IPagination, sort?: any): Promise<IProducts[]> {
+    const productQueryParams: IObjectParams = { ...params }
+    if (params.category) {
+      const objectID = Types.ObjectId
+      productQueryParams.category = new objectID(params.category)
+    }
+
+    const productQuery = ProductModel.find(productQueryParams)
+
+    if (sort) {
+      productQuery.sort(sort)
+    }
 
     if (relations && relations.length > 0) {
       relations.forEach((relation: string) => {

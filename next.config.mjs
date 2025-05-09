@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["picsum.photos", 'loremflickr.com',"api.gravatar.com"]
+    domains: ["picsum.photos", 'loremflickr.com', "api.gravatar.com", 'www.gravatar.com']
   }
 };
 

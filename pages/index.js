@@ -7,14 +7,18 @@ import Popular from "@/components/home/Popular";
 import ShopLayout from "@/components/layouts/Shop";
 import React from "react";
 import * as API from '../services/api'
+import Banner from "@/components/home/Banner";
+import SmallBanner from "@/components/home/SmallBanner";
 
 export default function Home(props) {
   return (
     <div>
       <ShopLayout title="فروشگاه">
-        <Header />
+        <Header products={props.popular}/>
         <BestSellers products={props.best_sellers} />
+        <Banner />
         <MostViewed products={props.most_viewed} />
+        <SmallBanner />
         <Latests products={props.latest} />
         <Popular products={props.popular} />
       </ShopLayout>

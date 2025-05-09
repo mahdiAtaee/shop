@@ -9,7 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-    const { state, dispatch } = useAppContext()
+    const { dispatch } = useAppContext()
 
     const handleLogin = async (e) => {
         e.preventDefault()

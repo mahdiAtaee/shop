@@ -7,7 +7,11 @@ const ProductList = ({ products }) => {
         <section className="section-gap">
             <div className="container">
                 <div className="row justify-content-center">
-                    {products.map((product) => <ProductItem key={product.id} {...product} />)}
+                    {products.map((product) => (
+                        <div key={product.id} className='col-6 col-md-4'>
+                            <ProductItem {...product}/>
+                        </div>
+                    ))}
                     <div className="col-md-12 text-center mt-4">
                         <a href="#" className="btn btn-pill btn-theme">
                             ادامه خواندن

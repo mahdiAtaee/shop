@@ -2,12 +2,12 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ProductItem = (product) => {    
+const ProductItem = (product) => {
     const isSpecialOffer = (price, discountedPrice) => {
         return discountedPrice && discountedPrice > 0 && discountedPrice < price
     }
     return (
-        <div className="col-md-4">
+        <div className="col-md-12">
             <div className="card product border-0 mb-4 box-hover">
                 <div className="position-relative">
                     {isSpecialOffer(product.price, product.discountedPrice) && <div className="ft-tag ft-inside-tr">ویژه</div>}

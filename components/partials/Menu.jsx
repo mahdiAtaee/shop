@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { IoIosArrowDown } from "react-icons/io";
 import _ from 'lodash';
+import Link from 'next/link';
 
 const Menu = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -84,27 +85,14 @@ const Menu = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-12">
-                        <div className="navbar-brand float-left">
-                            <a href="index-2.html">
-                                <Image
-                                    src="/assets/img/logo-dark.png"
-                                    alt="CLab"
-                                    style={{ objectFit: 'none' }}
-                                    width={120}
-                                    height={40}
-                                    priority
-                                />
-                            </a>
-                        </div>
-
                         <nav id="vl-menu">
                             <ul className="float-right nav-extra-link">
-                                <a
-                                    href="https://www.rtl-theme.com/user-profile/tn_plugin/"
+                                <Link
+                                    href="/products"
                                     className="btn btn-sm btn-pill btn-theme mt-3"
                                 >
                                     محصولات
-                                </a>
+                                </Link>
                             </ul>
 
                             <ul className="vlmenu light-sub-menu  float-right fade-effect">

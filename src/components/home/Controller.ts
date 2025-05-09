@@ -15,10 +15,10 @@ export default class Controller {
     }
 
     public async list(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const latest = await this.productRepository.findMany({}, undefined, { perPage: 3, offset: 0 }, { created_at: -1 })
-        const bestSellers = await this.productRepository.findMany({}, undefined, { perPage: 3, offset: 0 }, { purchase_count: -1 })
-        const popular = await this.productRepository.findMany({}, undefined, { perPage: 3, offset: 0 }, { total_score: -1 })
-        const mostViewed = await this.productRepository.findMany({}, undefined, { perPage: 3, offset: 0 }, { views_count: -1 })
+        const latest = await this.productRepository.findMany({}, undefined, { perPage: 6, offset: 0 }, { created_at: -1 })
+        const bestSellers = await this.productRepository.findMany({}, undefined, { perPage: 6, offset: 0 }, { purchase_count: -1 })
+        const popular = await this.productRepository.findMany({}, undefined, { perPage: 6, offset: 0 }, { total_score: -1 })
+        const mostViewed = await this.productRepository.findMany({}, undefined, { perPage: 6, offset: 0 }, { views_count: -1 })
 
         res.send({
             latest: await this.productTransformer.collection(latest),

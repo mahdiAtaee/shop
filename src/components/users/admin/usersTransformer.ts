@@ -1,3 +1,4 @@
+import { buildAvatar } from "../../../services/AvatarService";
 import DateService from "../../../services/DateService";
 import ITransformer from "../../contracts/ITransformer";
 import IUser from "../model/IUser";
@@ -18,7 +19,8 @@ export default class UsersTransformer implements ITransformer<IUser> {
             mobile: item.mobile,
             addresses: item.addresses,
             totalOrders: item.totalOrders,
-            wallet: item.wallet
+            wallet: item.wallet,
+            avatar: buildAvatar(item.email, 45)
         }
     }
     collection(items: IUser[]) {

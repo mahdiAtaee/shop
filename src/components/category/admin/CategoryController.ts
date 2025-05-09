@@ -11,6 +11,8 @@ class CategoryController {
 
   public async list(req: Request, res: Response) {
     const category = await Category.find();
+    console.log(category);
+    
     return res.send(category);
   }
 

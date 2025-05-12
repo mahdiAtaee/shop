@@ -10,11 +10,10 @@ import {
 import React from "react";
 import IAttributeGroup from "./IAttributesGroup";
 import { makeStyles, createStyles } from "@mui/styles";
-import Attribute from "./Attribute";
 import { AddBox, Delete } from "@mui/icons-material";
-import AttributeItem from "./AttributeItem";
-import { v4 as uuid } from "uuid";
 import { useCategoriesState } from "../context";
+import NewAttributeValue from "./NewAttributeValue";
+
 function important<T>(value: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (value + " !important") as any;
@@ -33,25 +32,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const AttributeGroup: React.FC<IAttributeGroup> = ({
-  title,
+  name,
   hash,
-  attributes,
+  slug,
+  filters
 }: IAttributeGroup) => {
   const styles = useStyles();
-  const { dispatch } = useCategoriesState();
+  const { state, dispatch } = useCategoriesState();
   const handleAddAttribute = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch({
       type: "ADD_ATTRIBUTE",
       payload: {
         groupID: hash,
-        attribute: {
-          hash: uuid(),
-          title: "",
-          slug: "",
-          filterable: false,
-          hasPrice: false,
-        },
+        filters: [],
       },
     });
   };
@@ -63,11 +57,12 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
     });
   };
 
+
   return (
     <Box>
-      <Box justifyContent={"space-between"} display={"flex"}>
+      <Box justifyContent={"space-between"} marginTop={"3rem"} display={"flex"}>
         <Typography variant="h6" className={styles.title}>
-          {title}
+          {name}
         </Typography>
         <FormControl>
           <Button
@@ -82,8 +77,8 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
       </Box>
       <Divider />
 
-      {attributes.map((attribute: AttributeItem) => (
-        <Attribute key={attribute.hash} {...attribute} />
+      {filters.map(filter => (
+        <NewAttributeValue key={filter.hash} hash={filter.hash} />
       ))}
 
       <FormControl className={styles.formControl}>

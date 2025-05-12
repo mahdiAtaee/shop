@@ -8,8 +8,12 @@ const Categories = () => {
   const [categories, setCategories] = useState<ICategoryItem[]>([]);
   useEffect(() => {
     const httpClient = new Http();
-    httpClient.get<ICategoryItem[]>("api/v1/categories").then((response) => {
-      setCategories(response.data);
+    httpClient.get("api/v1/admin/categories").then((response) => {
+      console.log(response.data);
+      const data = response.data as { success: boolean; categories: ICategoryItem[] };
+      if (data.success) {
+        setCategories(data.categories);
+      }
     });
   }, []);
 
@@ -18,7 +22,7 @@ const Categories = () => {
       <CategoriesTable
         columns={["عنوان", "اسلاگ"]}
         data={categories}
-        attributes={["title", "slug"]}
+        attributes={["name", "slug"]}
       />
     </Content>
   );

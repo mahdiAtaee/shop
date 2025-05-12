@@ -16,7 +16,7 @@ export const Coupons = () => {
   useEffect(() => {
     const getData = async () => {
       await httpClient
-        .get<{ __metadata: object, data: ICoupon[] }>(`api/v1/coupons?page=${page}`)
+        .get<{ __metadata: object, data: ICoupon[] }>(`api/v1/admin/coupons?page=${page}`)
         .then((res) => {
           setCoupons(res.data.data as ICoupon[])
           setPagination(res.data.__metadata as IPagination)

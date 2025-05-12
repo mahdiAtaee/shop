@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { CategoriesState, initState, reducer } from "../state";
+import { initState, reducer } from "../state";
 import IAction from "../../../contracts/IAction";
+import ICategoryItem from "../../contracts/ICategoryItem";
 
 interface CategoriesContextProps {
-  state: CategoriesState;
+  state: ICategoryItem;
   dispatch: React.Dispatch<IAction>;
 }
 

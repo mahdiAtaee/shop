@@ -11,7 +11,7 @@ export default function Products() {
   const httpClient = useMemo(() => new Http(), []);
   useEffect(() => {
     httpClient
-      .get("api/v1/products")
+      .get("api/v1/admin/products")
       .then((result) => setProducts(result.data as any))
       .catch((error) => console.log(error));
   }, []);

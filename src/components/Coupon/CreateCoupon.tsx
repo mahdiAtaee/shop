@@ -70,7 +70,7 @@ const CreateCoupon = () => {
 
         if (Object.keys(validationErrors).length === 0) {
             values.expires_at = date
-            await httpClient.post('api/v1/coupons', values)
+            await httpClient.post('api/v1/admin/coupons', values)
                 .then(response => {
                     console.log(response)
                     navigate('/coupons')

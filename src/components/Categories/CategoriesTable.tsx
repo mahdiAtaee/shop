@@ -14,16 +14,24 @@ interface CategoriesTableProps {
   data: object[];
 }
 
+interface IGetAttribute {
+  name: {
+    FA: string,
+    EN: string
+  },
+  slug:string
+}
+
 const getKeyValue =
   <T extends object, U extends keyof T>(key: U) =>
-  (obj: T) =>
-    obj[key];
+    (obj: T) => obj[key]
 
 const CategoriesTable = ({
   columns,
   attributes,
   data,
 }: CategoriesTableProps) => {
+  const getName = getKeyValue<IGetAttribute, "name">("name")
   return (
     <TableContainer>
       <Table>
@@ -35,11 +43,11 @@ const CategoriesTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item, i) => (
+          {data && data.map((item, i) => (
             <TableRow key={i}>
               {attributes.map((attr: string, i) => (
                 <TableCell key={i}>
-                  {getKeyValue(attr as never)(item)}
+                  {attr == "name" ? (item as IGetAttribute)["name"].FA : getKeyValue(attr as never)(item)}
                 </TableCell>
               ))}
             </TableRow>

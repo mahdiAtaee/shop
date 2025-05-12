@@ -25,7 +25,7 @@ export default function Orders() {
   useEffect(() => {
     const queryString = queryStringManager.stringify(queryStringData)
     httpClient
-      .get<{ _metadata: object, data: IOrder[] }>(`api/v1/orders?${queryString}`)
+      .get<{ _metadata: object, data: IOrder[] }>(`api/v1/admin/orders?${queryString}`)
       .then((result) => {
         setOrders(result.data.data as any)
         setPagination(result.data._metadata as IPagination)

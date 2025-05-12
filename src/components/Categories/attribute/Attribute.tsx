@@ -2,7 +2,7 @@ import React from "react";
 import { Box, FormControlLabel, Switch, Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { makeStyles, createStyles } from "@mui/styles";
-import AttributeItem from "./AttributeItem";
+import AttributeItem from "./IAttributeItem";
 import { useCategoriesState } from "../context";
 
 function important<T>(value: T): T {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Attribute = ({
   hash,
-  title,
+  name,
   slug,
   filterable,
   hasPrice,
@@ -48,12 +48,12 @@ const Attribute = ({
   return (
     <Box className={styles.box}>
       <TextField
-        id="title"
-        name="title"
+        id="name"
+        name="name"
         label="عنوان فارسی"
         variant="outlined"
         className={styles.attributeRow}
-        defaultValue={title}
+        defaultValue={name}
         onBlur={(event: React.FocusEvent<HTMLInputElement>) =>
           updateField(event.currentTarget.name, event.currentTarget.value)
         }

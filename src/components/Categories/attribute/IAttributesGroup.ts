@@ -1,7 +1,9 @@
-import AttributeItem from "./AttributeItem";
+import AttributeItem from "./IAttributeItem";
+
 
 export default interface IAttributesGroup {
-    hash: string;
-    title: string,
-    attributes: AttributeItem[]
+    hash: string
+    name: string
+    slug: string
+    filters: AttributeItem[]
 }

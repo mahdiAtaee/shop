@@ -16,7 +16,7 @@ export const Payments = () => {
   useEffect(() => {
     const getData = async () => {
       await httpClient
-        .get<{ __metadata: object, data: IPayment[] }>(`api/v1/payments?page=${page}`)
+        .get<{ __metadata: object, data: IPayment[] }>(`api/v1/admin/payments?page=${page}`)
         .then((res) => {
           setPayments(res.data.data as IPayment[])
           setPagination(res.data.__metadata as IPagination)

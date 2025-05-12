@@ -101,7 +101,7 @@ const ProductsContent = () => {
   );
   useEffect(() => {
     httpClient
-      .get<ICategoryItem[]>("api/v1/categories")
+      .get<ICategoryItem[]>("api/v1/admin/categories")
       .then((response) => {
         setCategories(response.data);
       })
@@ -162,7 +162,7 @@ const ProductsContent = () => {
   ) => {
     httpClient
       .get<IProductAttribute[]>(
-        `api/v1/categories/${event.target.value}/attributes`
+        `api/v1/admin/categories/${event.target.value}/attributes`
       )
       .then((response) => {
         setProductAttribute(response.data);
@@ -198,7 +198,7 @@ const ProductsContent = () => {
       form.append("gallery", file as Blob);
     });
     form.append("attributes", JSON.stringify(productAttribute));
-    httpClient.post("api/v1/products", form, {
+    httpClient.post("api/v1/admin/products", form, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -411,7 +411,7 @@ const ProductsContent = () => {
               {categories &&
                 categories?.map((category) => (
                   <MenuItem key={category?.id} value={category?.id}>
-                    {category?.title}
+                    {category?.name?.FA}
                   </MenuItem>
                 ))}
             </Select>

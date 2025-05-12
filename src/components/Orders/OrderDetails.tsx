@@ -67,7 +67,7 @@ const OrderDetails = () => {
     useEffect(() => {
         const fetchOrder = () => {
             try {
-                httpService.get<IOrder>(`api/v1/orders/${orderID}`)
+                httpService.get<IOrder>(`api/v1/admin/orders/${orderID}`)
                     .then(({ data }) => {
                         setOrder(data as IOrder)
                     })
@@ -90,7 +90,7 @@ const OrderDetails = () => {
         setOrderStatus(event.target.value as unknown as OrderStatus)
     }
     const updateOrderStatus = () => {
-        httpService.patch(`api/v1/orders/${orderID}`, {
+        httpService.patch(`api/v1/admin/orders/${orderID}`, {
             orderStatus
         }).then(({ data }) => {
             const response = data as unknown as IResponseData
@@ -145,7 +145,7 @@ const OrderDetails = () => {
                             return (
                                 <StyledTableRow key={index}>
                                     <StyledTableCell component="th" scope="row" align="center">
-                                        {orderLine.product.title}
+                                        {orderLine.product && orderLine.product.title}
                                     </StyledTableCell>
                                     <StyledTableCell align="center">{orderLine.price}</StyledTableCell>
                                     <StyledTableCell align="center">{orderLine.discountedPrice}</StyledTableCell>

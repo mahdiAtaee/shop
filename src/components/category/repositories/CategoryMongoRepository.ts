@@ -23,6 +23,10 @@ export default class CategoryMongoRepository implements ICategoryRepository {
     return Category.findOne({ slug })
   }
 
+  public async findByLevel(level: string): Promise<ICategory[] | null> {
+    return Category.find({ level })
+  }
+
   public async findMany(params: IObjectParams, relations?: string[], pagination?: IPagination): Promise<ICategory[]> {
     const paymentQueryParams: IObjectParams = {}
 
@@ -36,6 +40,7 @@ export default class CategoryMongoRepository implements ICategoryRepository {
       })
       paymentQueryParams.user = { $in: users.map((user: IUser) => user._id) }
     }
+
 
     const paymentQuery = Category.find(paymentQueryParams)
 

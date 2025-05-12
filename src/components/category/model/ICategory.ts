@@ -2,7 +2,16 @@ import { Document } from "mongoose";
 import IAttributeCategory from "./IAttributeCategory";
 
 export default interface ICategory extends Document {
-  title: string;
-  slug: string;
-  groups: IAttributeCategory[];
+  name: {
+    fa: string,
+    en: string
+  }
+  slug: string
+  parentId: string,
+  level: number,
+  icon: string,
+  isActive: boolean,
+  filterGroups: IAttributeCategory[]
 }
+
+

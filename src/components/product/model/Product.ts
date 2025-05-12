@@ -22,15 +22,15 @@ const ProductSchema: Schema = new Schema({
   status: { type: String, enum: ProductStatus, default: ProductStatus.INIT },
 });
 
-// ProductSchema.virtual('thumbnailUrl').get(function (this:IProducts) {
-//   return `${process.env.APP_URL}/contents/${this.thumbnail}`
-// })
+ProductSchema.virtual('thumbnailUrl').get(function (this:IProducts) {
+  return `${process.env.APP_URL}/contents/${this.thumbnail}`
+})
 
 
-// ProductSchema.virtual('galleryUrl').get(function (this:IProducts) {
-//   return this.gallery?.map((item:string) => {
-//     return `${process.env.APP_URL}/contents/${item}`
-//   })
-// })
+ProductSchema.virtual('galleryUrl').get(function (this:IProducts) {
+  return this.gallery?.map((item:string) => {
+    return `${process.env.APP_URL}/contents/${item}`
+  })
+})
 
 export default model<IProducts>("Product", ProductSchema);

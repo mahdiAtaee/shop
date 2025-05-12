@@ -22,7 +22,7 @@ class Controller {
         const perPage = 9
         const page = req.query || 1
         const offset = Math.ceil((page as unknown as number - 1) / perPage)
-        const products = await this.productRepository.findMany({}, [], { perPage, offset })
+        const products = await this.productRepository.findMany({}, [], { perPage, offset }, { created_at: -1 })
 
         if (!products) {
             res.status(404).send({
@@ -34,8 +34,8 @@ class Controller {
     }
     public async find(req: Request, res: Response) {
         const { id } = req.params
-        const singleProduct = await this.productRepository.findOne(id as string,['category'])
-        
+        const singleProduct = await this.productRepository.findOne(id as string, ['category'])
+
         if (!singleProduct) {
             res.status(404).send({
                 success: false,
@@ -48,9 +48,9 @@ class Controller {
     public async comments(req: Request, res: Response) {
         const commentRepository = new CommentMongoRepository()
         const commentTransformer = new CommentTransformer()
-        const {id} = req.params
+        const { id } = req.params
 
-        const comments = await commentRepository.findByProduct(id,['user'])
+        const comments = await commentRepository.findByProduct(id, ['user'])
 
         if (!comments) {
             return res.status(404).send({

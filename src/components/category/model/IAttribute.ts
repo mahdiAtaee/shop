@@ -1,6 +1,13 @@
+import FilterValueEnum from "./FilterValueEnum";
+
 export default interface IAttribute {
-  title: string;
-  slug: string;
-  filterable: boolean;
-  hasPrice: boolean;
+  name: {
+    fa: string,
+    en: string
+  }
+  slug: string
+  type: FilterValueEnum
+  values: []
+  filterable: boolean
+  hasPrice: boolean
 }

@@ -68,6 +68,11 @@
   .pagination-bullet-active{
     @apply bg-white w-4
   }
+
+  .product-card .swiper-wrapper{
+    height: 410px !important;
+    align-items: stretch;
+  }
 }
 
 .text-dark-green {

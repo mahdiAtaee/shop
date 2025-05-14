@@ -8,46 +8,63 @@ const Card = ({ products, title }) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     return (
-        <div className="container-fluid">
-            <div className='row'>
-                <div className='col-12 border p-4 rounded'>
-                    <div className='w-100 d-flex align-items-center justify-content-between pb-3 font-family-vazir'>
-                        <div>
-                            <span>محصولات ما</span>
-                            <p className='h3'>
-                                <span className='text-dark-green'>{title} </span>
-                                محصولات ما
-                            </p>
-                        </div>
-                        <div className='d-flex align-items-center'>
-                            <button ref={prevRef} className='btn btn-sm btn-outline-dark rounded-circle mr-2 me-2 arrow-btn'>
-                                <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                            </button>
-                            <button ref={nextRef} className='btn btn-sm btn-outline-dark rounded-circle me-2 arrow-btn'>
-                                <i className="fa fa-arrow-left" aria-hidden="true"></i>
-                            </button>
-                        </div>
+        <div className='w-full p-4 rounded-2xl'>
+            <div className='p-8 bg-blue-300 rounded-r-2xl'>
+                <div className='w-full flex items-center justify-between pb-3 font-vazir'>
+                    <div>
+                        <span className='text-md'>محصولات ما</span>
+                        <p className='text-3xl font-iranSans'>
+                            <span className='text-dark-green'>{title} </span>
+                            محصولات ما
+                        </p>
                     </div>
-                    <div className='w-100 row'>
-                        <Swiper
-                            onBeforeInit={(swiper) => {
-                                swiper.params.navigation.prevEl = prevRef.current;
-                                swiper.params.navigation.nextEl = nextRef.current;
-                            }}
-                            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-                            modules={[Navigation, A11y]}
-                            spaceBetween={10}
-                            slidesPerView={1}
-                            onSwiper={(swiper) => console.log(swiper)}
-                            onSlideChange={() => console.log('slide change')}
-                        >
-                            {products && products.map(product => (
-                                <SwiperSlide key={product.id} className='col-4'>
-                                    <ProductItem {...product} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
+                    <div className='flex items-center'>
+                        <button
+                            ref={prevRef}
+                            className='mr-2 me-2 cursor-pointer'>
+                            <i className="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                        <button ref={nextRef} className='me-2 cursor-pointer '>
+                            <i className="fa fa-arrow-left" aria-hidden="true"></i>
+                        </button>
                     </div>
+                </div>
+                <div className='w-full product-card'>
+                    <Swiper
+                        onBeforeInit={(swiper) => {
+                            swiper.params.navigation.prevEl = prevRef.current;
+                            swiper.params.navigation.nextEl = nextRef.current;
+                        }}
+                        height="400px"
+                        navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+                        modules={[Navigation, A11y]}
+                        spaceBetween={10}
+                        slidesPerView={3.5}
+                        breakpoints={{
+                        0: {
+                            slidesPerView: 2,
+                            spaceBetween:15
+                        },
+                        639: {
+                            slidesPerView: 3,
+                        },
+                        865: {
+                            slidesPerView: 3
+                        },
+                        1000: {
+                            slidesPerView: 4
+                        },
+                        1500: {
+                            slidesPerView: 5
+                        },
+                    }}
+                    >
+                        {products && products.map(product => (
+                            <SwiperSlide key={product.id} className='w-full h-full'>
+                                <ProductItem {...product} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </div>
         </div>

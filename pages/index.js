@@ -9,6 +9,7 @@ import React from "react";
 import * as API from '../services/api'
 import Banner from "@/components/home/Banner";
 import SmallBanner from "@/components/home/SmallBanner";
+import DiscountedProduct from "@/components/home/DiscountedProduct";
 
 export default function Home(props) {
   return (
@@ -20,6 +21,7 @@ export default function Home(props) {
         <MostViewed products={props.most_viewed} />
         <SmallBanner />
         <Latests products={props.latest} />
+        <DiscountedProduct products={props.popular}/>
         <Popular products={props.popular} />
       </ShopLayout>
     </div>

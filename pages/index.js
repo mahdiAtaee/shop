@@ -28,7 +28,7 @@ export default function Home(props) {
 
 export async function getStaticProps() {
   const result = await API.get('/home')
-
+  
   return {
     props: {
       best_sellers: result.data.best_sellers,

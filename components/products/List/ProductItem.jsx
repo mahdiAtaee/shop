@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toPersianNumber } from '@/services/lang'
 
 const ProductItem = (product) => {
     const isSpecialOffer = (price, discountedPrice) => {
@@ -9,31 +10,37 @@ const ProductItem = (product) => {
     return (
         <div className="col-md-12">
             <div className="card product border-0 mb-4 box-hover">
-                <div className="position-relative">
-                    {isSpecialOffer(product.price, product.discountedPrice) && <div className="ft-tag ft-inside-tr">ویژه</div>}
+                <div className="position-relative d-flex align-items-center justify-content-center">
+                    {isSpecialOffer(product.price, product.discountedPrice) ? <div className="ft-tag ft-inside-tr">ویژه</div> : null}
                     <Image
                         className="card-img-top"
                         src={product.thumbnail}
                         alt="card image"
-                        width={200}
-                        height={350}
+                        width={180}
+                        height={200}
                     />
                 </div>
                 <div className="card-body py-4 text-center">
-                    <h6 className="mb-2 font-size-16">
+                    <h6 className="mb-2 font-size-16 font-IranYekan">
                         <Link href={`/products/${product.id}`}>
                             {product.title}
                         </Link>
                     </h6>
                     <div className="price mb-3">
-                        <del className="text-muted mr-2">
-                            <span className="font-size-14 h6">{product.price} تومان</span>
-                        </del>
-                        <span className="h6">{product.discountedPrice} تومان</span>
+                        {product.discountedPrice > 0 ? (
+                            <>
+                                <del className="text-muted mr-2">
+                                    <span className="font-size-14 h6">{toPersianNumber(product.price)} تومان</span>
+                                </del>
+                                <span className="h6">{toPersianNumber(product.discountedPrice)} تومان</span>
+                            </>
+                        ) : (
+                            <span className="h6">{toPersianNumber(product.price)} تومان</span>
+                        )}
                     </div>
-                    <a href="#" className="btn btn-sm btn-pill btn-outline">
+                    <Link href={`/products/${product.id}`} className="btn btn-sm btn-pill btn-outline">
                         افزودن به سبد خرید
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

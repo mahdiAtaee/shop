@@ -22,7 +22,7 @@ const Shop = ({ children, title }) => {
     }, [])
 
     return (
-        <div>
+        <div dir='rtl'>
             <Head>
                 <title>{title}</title>
                 <meta charSet="utf-8" />

@@ -37,7 +37,7 @@ const Card = ({ products, title }) => {
                             navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
                             modules={[Navigation, A11y]}
                             spaceBetween={10}
-                            slidesPerView={3.5}
+                            slidesPerView={1}
                             onSwiper={(swiper) => console.log(swiper)}
                             onSlideChange={() => console.log('slide change')}
                         >

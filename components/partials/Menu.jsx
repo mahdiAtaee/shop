@@ -2,9 +2,13 @@
 import { get } from '@/services/api';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { IoIosArrowDown } from "react-icons/io";
-import _ from 'lodash';
+import { BiCategoryAlt } from "react-icons/bi";
+import { AiOutlineFire } from "react-icons/ai";
+import { CiPercent } from "react-icons/ci";
+import { TiHeartFullOutline } from "react-icons/ti";
 import Link from 'next/link';
+import CategoryMenu from './Category';
+import { TabGroup } from '@headlessui/react'
 
 const Menu = () => {
     const [isMounted, setIsMounted] = useState(false);
@@ -12,52 +16,13 @@ const Menu = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             const { data } = await get('/categories')
-            setCategories(_.chunk(data.categories, 8))
+            console.log(data);
+
+            setCategories(data.categories)
         }
         fetchCategories()
         setIsMounted(true);
     }, []);
-
-    const menuItems = [
-        {
-            title: 'خانه',
-            submenu: [{
-                subItem: [
-                    {
-                        title: 'صفحات فرود',
-                        icon: 'vl-pop-corn',
-                        href: 'page-landing.html'
-                    },
-                    {
-                        title: 'صفحات داخلی',
-                        icon: 'vl-layer',
-                        href: 'page-landing.html'
-                    },
-                    {
-                        title: 'صفحات خارجی',
-                        icon: 'vl-gear',
-                        href: 'page-landing.html'
-                    },
-                ]
-            }]
-        }, {
-            title: 'درباره ما',
-        },
-        {
-            title: 'پشتیبانی'
-        },
-        {
-            title: 'دسته بندی',
-            submenu: categories.map((chunkedCategory) => ({
-                subItem: chunkedCategory.map(category => ({
-                    title: category.title,
-                    icon: 'vl-layer',
-                    href: `category/${category.slug}`
-                }))
-            }))
-        }
-    ];
-
 
     if (!isMounted) {
         // Return minimal server render
@@ -81,67 +46,45 @@ const Menu = () => {
     }
 
     return (
-        <header className="app-header">
-            <div className="container">
-                <div className="row">
-                    <div className="col-12">
-                        <nav id="vl-menu">
-                            <ul className="float-right nav-extra-link">
-                                <Link
-                                    href="/products"
-                                    className="btn btn-sm btn-pill btn-theme mt-3"
-                                >
-                                    محصولات
-                                </Link>
-                            </ul>
+        <header className="w-screen h-16 border-b border-gray-300">
+            <nav className='flex items-center h-full gap-4 px-8 font-vazir'>
+                <ul className="group flex items-center h-full relative">
+                    <li className='h-full cursor-pointer !text-lg font-bold flex gap-1 items-center nav-hover-btn'>
+                        <BiCategoryAlt />
+                        <span>دسته بندی کالاها | </span>
+                    </li>
+                    <TabGroup defaultIndex={0} vertical={false} className="group-hover:flex bg-white w-max rounded-b-lg mt-0.5 shadow absolute top-full right-0 z-30 hidden">
+                        <CategoryMenu categories={categories} />
+                    </TabGroup>
+                </ul>
+                <ul className="flex items-center gap-2 h-full">
+                    <Link
+                        href="/products"
+                        className="h-full text-[0.9rem] text-gray-600 font-iranSans flex items-center gap-1 nav-hover-btn"
+                    >
+                        <TiHeartFullOutline />
+                        <span>همه محصولات</span>
+                    </Link>
+                    <Link
+                        href="/products"
+                        className="h-full text-[0.9rem] text-gray-600 font-iranSans flex items-center gap-1 nav-hover-btn"
+                    >
+                        <AiOutlineFire />
+                        <span>پرفروش ترین ها</span>
+                    </Link>
+                    <Link
+                        href="/products"
+                        className="h-full text-[0.9rem] text-gray-600 font-iranSans flex items-center gap-1 nav-hover-btn"
+                    >
+                        <CiPercent />
+                        <span>شگفت انگیزها</span>
+                    </Link>
+                </ul>
 
-                            <ul className="vlmenu light-sub-menu  float-right fade-effect">
-                                {menuItems.map((item, index) => (
-                                    <MenuItem key={index} item={item} />
-                                ))}
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+            </nav>
         </header>
     );
 };
 
-// Separate component for menu items
-const MenuItem = ({ item }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <li onMouseEnter={() => setIsOpen(!isOpen)}>
-            <a href="#" >
-                {item.title}
-                {item.submenu && (
-                    <>
-                        <IoIosArrowDown className='align-sub' />
-                    </>
-                )}
-            </a>
-
-            {item.submenu && isOpen && (
-                <ul className='container w-100 d-flex align-items-center justify-content-around position-absolute left-0 top-0' style={{ left: 0 }}>
-                    {item.submenu.map((subMenuItem, subIndex) => (
-                        <div key={subIndex}>
-                            {subMenuItem.subItem && subMenuItem.subItem.map(itemchunk => (
-                                <li key={subIndex} >
-                                    <a href={itemchunk.href} className="d-flex">
-                                        <i className={`${itemchunk.icon} font-size-20`} />
-                                        <span className="font-weight-700">{itemchunk.title}</span>
-                                    </a>
-                                </li>
-                            ))}
-                        </div>
-                    ))}
-                </ul>
-            )
-            }
-        </li >
-    );
-};
 
 export default Menu;

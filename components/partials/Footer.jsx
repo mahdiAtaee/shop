@@ -20,7 +20,6 @@ const Footer = () => {
 
 
             <script src="/assets/vendor/jquery/jquery.min.js"></script><script src="/assets/vendor/popper.min.js"></script>
-            <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
             <script src="/assets/vendor/vl-nav/js/vl-menu.js"></script>
             <script src="/assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
             <script src="/assets/vendor/owl/owl.carousel.min.js"></script>
@@ -29,9 +28,6 @@ const Footer = () => {
             <script src="/assets/vendor/typist.js"></script>
             <script src="/assets/vendor/jquery.isotope.js"></script>
             <script src="/assets/vendor/imagesloaded.js"></script>
-            <script src="/assets/vendor/visible.js"></script>
-            <script src="/assets/vendor/wow.min.js"></script>
-            <script src="/assets/js/scripts.js"></script>
         </>
     )
 }

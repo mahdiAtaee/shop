@@ -3,34 +3,32 @@ import Menu from './Menu'
 import useAppContext from '@/context/useAppContext'
 import Link from 'next/link'
 import Image from 'next/image'
-
+import { HiOutlineLogin } from "react-icons/hi";
+import { SlBasket } from "react-icons/sl";
+import { CiSearch } from "react-icons/ci";
 const Header = () => {
     const { state } = useAppContext()
-    
+
 
     return (
         <>
-            <section className="py-2 bg-gray">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-7">
-                            <small className="font-size-14">
-                                هر سوالی دارید؟ با ما تماس بگیرید: 1-222-333-4445
-                            </small>
+            <section className="bg-gray">
+                <div className="w-screen h-16 px-8">
+                    <div className="flex items-center justify-between gap-4 h-full">
+                        <div className='flex items-center gap-8 grow'>
+                            <Image src="/assets/img/logo.png" width={40} height={40} alt='BAZAREIO' />
+                            <div className='relative w-full rounded-lg bg-gray-300 py-1.5 px-8 min-h-10 '>
+                               <CiSearch className='absolute top-1/2 right-2.5 -translate-y-1/2 text-xl'/>
+                                <input type='search' placeholder='جستجو' className='w-full h-full outline-0 text-xs' />
+                            </div>
                         </div>
-                        <div className="col-md-5 text-md-right d-flex align-items-center justify-content-md-end">
+                        <div className="flex items-center justify-end grow">
                             {!state.user.id ? (
-                                <ul className="list-inline m-0 d-inline mr-2">
-                                    <li className="list-inline-item font-size-14">
-                                        <Link href="/auth/login" className="text-dark">
-                                            ورود
-                                        </Link>
-                                    </li>
-                                    <li className="list-inline-item font-size-14 ml-2">
-                                        <Link href="/auth/register" className="text-dark">
-                                            ایجاد حساب کاربری
-                                        </Link>
-                                    </li>
+                                <ul className="flex items-center gap-4 mx-4">
+                                    <Link href="/auth/login" className="flex items-center gap-2 text-dark text-iranSans border py-1.5 px-2 rounded-lg border-gray-400">
+                                        <HiOutlineLogin/>
+                                        <span>ورود | ثبت نام</span>
+                                    </Link>
                                 </ul>
                             ) : (
                                 <div className="dropdown d-inline ml-2">
@@ -56,9 +54,9 @@ const Header = () => {
                                 </div>
                             )}
 
-                            <Link href='/basket' className="text-decoration-none text-dark ml-2">
-                                <i className="vl-cart1" />
-                                {state?.basket.length}
+                            <Link href='/basket' className="text-decoration-none flex items-baseline text-xl">
+                                <span className='text-xs'>{state?.basket.length}</span>
+                                <SlBasket width={25} height={25}/>
                             </Link>
                         </div>
                     </div>

@@ -16,13 +16,13 @@ const Header = () => {
                 <div className="w-screen h-16 px-8">
                     <div className="flex items-center justify-between gap-4 h-full">
                         <div className='flex items-center gap-8 grow'>
-                            <Image src="/assets/img/logo.png" width={40} height={40} alt='BAZAREIO' />
+                            <Image src="/assets/img/logo.png" width={40} height={40} alt='BAZAREIO' className='hidden md:block'/>
                             <div className='relative w-full rounded-lg bg-gray-300 py-1.5 px-8 min-h-10 '>
                                <CiSearch className='absolute top-1/2 right-2.5 -translate-y-1/2 text-xl'/>
                                 <input type='search' placeholder='جستجو' className='w-full h-full outline-0 text-xs' />
                             </div>
                         </div>
-                        <div className="flex items-center justify-end grow">
+                        <div className="hidden md:flex items-center justify-end grow">
                             {!state.user.id ? (
                                 <ul className="flex items-center gap-4 mx-4">
                                     <Link href="/auth/login" className="flex items-center gap-2 text-dark text-iranSans border py-1.5 px-2 rounded-lg border-gray-400">

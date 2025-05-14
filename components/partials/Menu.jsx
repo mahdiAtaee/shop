@@ -46,7 +46,7 @@ const Menu = () => {
     }
 
     return (
-        <header className="w-screen h-16 border-b border-gray-300">
+        <header className="hidden md:block w-screen h-16 border-b border-gray-300">
             <nav className='flex items-center h-full gap-4 px-8 font-vazir'>
                 <ul className="group flex items-center h-full relative">
                     <li className='h-full cursor-pointer !text-lg font-bold flex gap-1 items-center nav-hover-btn'>

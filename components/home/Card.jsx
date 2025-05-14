@@ -9,7 +9,7 @@ const Card = ({ products, title }) => {
     const nextRef = useRef(null);
     return (
         <div className='w-full p-4 rounded-2xl'>
-            <div className='p-8 bg-blue-300 rounded-r-2xl'>
+            <div className='p-8 border border-gray-200 rounded-r-2xl'>
                 <div className='w-full flex items-center justify-between pb-3 font-vazir'>
                     <div>
                         <span className='text-md'>محصولات ما</span>
@@ -42,7 +42,7 @@ const Card = ({ products, title }) => {
                         slidesPerView={3.5}
                         breakpoints={{
                         0: {
-                            slidesPerView: 2,
+                            slidesPerView: 1,
                             spaceBetween:15
                         },
                         639: {

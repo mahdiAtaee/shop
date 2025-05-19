@@ -1,81 +1,78 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import SingleHeader from './Header'
 import Gallery from './components/Gallery'
 import Details from './components/Details'
 import Description from './components/Description'
 import Attributes from './components/Attributes'
 import Comments from './components/Comments'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
 
 const SingleProduct = ({ product, comments }) => {
     return (
-        <>
-            <SingleHeader />
-            <section className="section-gap bg-white">
-                <div className="container">
-                    <div className="row justify-content-between mb-lg-5 mb-4">
-                        <div className='col-md-6'>
-                            <Gallery images={product.gallery} />
-                        </div>
-                        <div className='col-md-5'>
-                            <Details product={product} />
-                        </div>
-                    </div>
-                    <div className="row justify-content-center">
-                        <div className='col-md-12'>
-                            <ul className="nav nav-line mb-md-5 mb-3" role="tablist">
-                                <li className="nav-item">
-                                    <a
-                                        className="nav-link active"
-                                        id="branding-tab"
-                                        data-toggle="tab"
-                                        href="#branding"
-                                        role="tab"
-                                        aria-controls="branding"
-                                        aria-selected="true"
-                                    >
-                                        توضیحات
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a
-                                        className="nav-link"
-                                        id="ui-tab"
-                                        data-toggle="tab"
-                                        href="#ui"
-                                        role="tab"
-                                        aria-controls="ui"
-                                        aria-selected="false"
-                                    >
-                                        مشخصات
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a
-                                        className="nav-link"
-                                        id="frontend-tab"
-                                        data-toggle="tab"
-                                        href="#frontend"
-                                        role="tab"
-                                        aria-controls="frontend"
-                                        aria-selected="false"
-                                    >
-                                        نظرات 2
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className='tab-content text-left'>
-                                <Description />
-                                <Attributes attributes={product.attributes} />
-                                <Comments comments={comments} />
-                            </div>
-                        </div>
-                    </div>
+        <section className="w-dvw min-h-dvh overflow-x-hidden">
+            <div className='w-screen grid grid-cols-1 gird-rows-2 md:grid-cols-2 md:grid-rows-1 gap-8 p-4'>
+                <div className='w-full'>
+                    <Gallery images={product.gallery} />
                 </div>
-            </section>
-
-        </>
+                <div className='w-full p-4'>
+                    <Details product={product} />
+                </div>
+            </div>
+            <div className="w-screen my-6">
+                <TabGroup>
+                    <TabList className="border-b border-gray-300 flex items-stretch min-h-16 px-4">
+                        <Tab className="cursor-pointer outline-0 basis-24 relative">
+                            {({ selected }) => (
+                                <>
+                                    <span className={`${selected ? "text-red-400 font-sans font-bold" : ""}`}>معرفی</span>
+                                    <div>
+                                        {selected && (
+                                            <span className='w-full h-1 absolute bottom-0 left-0 right-0 rounded-t-2xl bg-red-400' />
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                        </Tab>
+                        <Tab className="cursor-pointer outline-0 basis-24 relative">
+                            {({ selected }) => (
+                                <>
+                                    <span className={`${selected ? "text-red-400 font-sans font-bold" : ""}`}>مشخصات</span>
+                                    <div>
+                                        {selected && (
+                                            <span className='w-full h-1 absolute bottom-0 left-0 right-0 rounded-t-2xl bg-red-400' />
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                        </Tab>
+                        <Tab className="cursor-pointer outline-0 basis-24 relative">
+                            {({ selected }) => (
+                                <>
+                                    <span className={`${selected ? "text-red-400 font-sans font-bold" : ""}`}>دیدگاه ها</span>
+                                    <div>
+                                        {selected && (
+                                            <span className='w-full h-1 absolute bottom-0 left-0 right-0 rounded-t-2xl bg-red-400' />
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                        </Tab>
+                    </TabList>
+                    <TabPanels className="p-4">
+                        <TabPanel>
+                            <Description describe={product.description} />
+                        </TabPanel>
+                        <TabPanel>
+                            <Attributes attributes={product.attributes} />
+                        </TabPanel>
+                        <TabPanel>
+                            <Comments comments={comments} score={product.totalScore} />
+                        </TabPanel>
+                    </TabPanels>
+                </TabGroup>
+            </div>
+        </section>
     )
 }
 

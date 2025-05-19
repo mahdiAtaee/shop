@@ -1,19 +1,12 @@
 import React from 'react'
+import MobileMenu from './MobileMenu'
 
 const Footer = () => {
     return (
-        <>
-            <footer className="app-footer pb-0 border-0 text-md-left text-center">
-                
-                <div className="app-secondary-footer mt-md-5 mt-3">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col">
-                                <span className="copyright">© 2025 مهدی عطایی. تمام حقوق محفوظ است.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <>  
+            
+            <footer className="app-footer border-0 text-xs md:text-lg py-10 text-md-left text-center md:py-6 bg-black text-white">
+                <span className="copyright">© 2025 مهدی عطایی. تمام حقوق محفوظ است.</span>
             </footer>
 
 

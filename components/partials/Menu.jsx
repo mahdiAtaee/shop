@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import { get } from '@/services/api';
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { BiCategoryAlt } from "react-icons/bi";
 import { AiOutlineFire } from "react-icons/ai";
 import { CiPercent } from "react-icons/ci";
@@ -11,39 +9,16 @@ import CategoryMenu from './Category';
 import { TabGroup } from '@headlessui/react'
 
 const Menu = () => {
-    const [isMounted, setIsMounted] = useState(false);
     const [categories, setCategories] = useState([])
     useEffect(() => {
         const fetchCategories = async () => {
             const { data } = await get('/categories')
-            console.log(data);
-
             setCategories(data.categories)
         }
         fetchCategories()
-        setIsMounted(true);
     }, []);
 
-    if (!isMounted) {
-        // Return minimal server render
-        return (
-            <header className="app-header">
-                <div className="container">
-                    <div className="navbar-brand">
-                        <a href="/">
-                            <Image
-                                src="/assets/img/logo-dark.png"
-                                alt="CLab"
-                                width={120}
-                                height={40}
-                                priority
-                            />
-                        </a>
-                    </div>
-                </div>
-            </header>
-        );
-    }
+    
 
     return (
         <header className="hidden md:block w-screen h-16 border-b border-gray-300">

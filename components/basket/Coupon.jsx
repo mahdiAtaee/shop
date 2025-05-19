@@ -39,23 +39,20 @@ const Coupon = () => {
     }
 
     return (
-        <div className="col-md-7">
+        <div className="p-6">
             <h6>تخفیف کوپن</h6>
-            <p className="text-muted">لطفا کد کوپن خود را در صورت لزوم وارد کنید</p>
+            <p className="text-xs text-gray-500">لطفا کد تخفیف خود را وارد کنید</p>
             {applyResult.status === false && <Notify message={applyResult.message} status={false} />}
             {applyResult.status === true && <Notify message={applyResult.message} status={true} />}
-            <form className="d-md-flex mt-lg-4 mt-3 mb-4">
+            <form className="flex flex-col mt-3 mb-4">
                 <input
                     type="text"
-                    className="form-control mr-2 mb-2"
+                    className="py-2 px-4 border border-gray-300 rounded outline-0"
                     placeholder="کد کوپن"
                     value={couponCode} onChange={(e) => setCouponCode(e.target.value.trim())}
                 />
-                <button type="submit" onClick={applyCoupon} className="btn btn-pill btn-solid-dark mr-2  mb-2">
+                <button type="submit" onClick={applyCoupon} className="px-4 py-2 my-4 bg-black text-white rounded cursor-pointer">
                     اعمال کوپن
-                </button>
-                <button type="submit" className="btn btn-pill btn-outline  mb-2">
-                    بروز سبد
                 </button>
             </form>
         </div>

@@ -24,7 +24,6 @@ const OrdersList = () => {
         fetchOrders()
     }, [])
 
-    console.log(orders);
 
 
     return (

@@ -4,6 +4,7 @@ import { login } from '@/services/auth'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import useAppContext from '@/context/useAppContext'
+import Image from 'next/image'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -34,99 +35,53 @@ const Login = () => {
 
     return (
         <AuthLayout title="صفحه ورود">
-            <div className="section-gap bg-gray h-screen">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-md-12">
-                            <div className="card border-0 row no-gutters flex-column flex-md-row">
-                                <div className="card-body d-flex align-items-center col-lg-5 p-md-5 p-3">
-                                    <div className="w-100">
-                                        <img
-                                            className="mb-lg-5 mb-4"
-                                            src="/assets/img/logo-dark.png"
-                                            srcSet="/assets/img/logo-dark@2x.png 2x"
-                                            alt=""
+            <div className="w-dvw h-dvh overflow-hidden flex items-center justify-center">
+                <div className="relative w-full h-full md:w-3/4 md:h-3/4 bg-white rounded-xl overflow-hidden shadow-xl shadow-blue-100 wave-complete">
+                    <Image src="/assets/img/wave.png" fill alt='wave' className='absolute z-0 top-0 left-0 right-0 bottom-0' />
+
+                    <div className="relative z-30 flex items-center justify-between p-3 w-full h-full">
+                        <div className="relative w-full h-full">
+                            <Image
+                                className="mb-lg-5 mb-4"
+                                src="/assets/img/login.svg"
+                                fill
+                                alt=""
+                            />
+                        </div>
+                        <div className="h-full w-full p-8">
+                            <h3 className='text-lg text-center my-6 leading-10'>برای استفاده از برنامه لطفا وارد شوید</h3>
+                            <form dir='rtl'>
+                                <div className="border border-gray-300 rounded-lg py-2 px-4">
+                                    <input
+                                        type="email"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full h-full outline-0"
+                                        placeholder="آدرس ایمیل"
+                                    />
+                                </div>
+                                <div className="border border-gray-300 rounded-lg py-2 px-4 my-4">
+                                    <div className="relative">
+                                        <input
+                                            type="password"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            className="w-full h-full outline-0"
+                                            placeholder="رمز عبور"
                                         />
-                                        <form>
-                                            <div className="form-group">
-                                                <input
-                                                    type="email"
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                    className="form-control"
-                                                    placeholder="آدرس ایمیل"
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="icon-field-right">
-                                                    <i className="fa fa-eye" />
-                                                    <input
-                                                        type="password"
-                                                        onChange={(e) => setPassword(e.target.value)}
-                                                        className="form-control"
-                                                        placeholder="رمز عبور"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <div className="custom-control custom-checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="custom-control-input"
-                                                        id="customCheck1"
-                                                    />
-                                                    <label
-                                                        className="custom-control-label"
-                                                        htmlFor="customCheck1"
-                                                    >
-                                                        مرا به خاطر بسپار
-                                                    </label>
-                                                    <a href="#" className="text-dark float-right">
-                                                        رمز عبور فراموش شده؟
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <button onClick={handleLogin} className="btn btn-theme">
-                                                    ورود
-                                                </button>
-                                            </div>
-                                            <div className="form-group mt-lg-5">
-                                                <Link href='/auth/register'>ثبت نام</Link>
-                                            </div>
-                                        </form>
+                                        <i className="fa fa-eye absolute left-1 top-1/2 -translate-y-1/2" />
                                     </div>
                                 </div>
-                                <div className="flex-column col-lg-7">
-                                    <div className="position-relative">
-                                        <img
-                                            className="card-img-right flex-grow-1 "
-                                            src="/assets/img/cards/29a.jpg"
-                                            alt=""
-                                        />
-                                        <div className="login-content">
-                                            <div className="h1 login-circle-logo font-weight-800 text-primary mb-4">
-                                                ک
-                                            </div>
-                                            <h2 className="">آن را بهتر و سریعتر کنید</h2>
-                                            <p>کلاب بهترین است از نگاه مشتریان تم فارست</p>
-                                            <div className="row justify-content-center mt-lg-5">
-                                                <div className="col-md-8">
-                                                    <ul className="list-group text-left">
-                                                        <li className="list-group-item">
-                                                            <i className="fa fa-check pr-3 text-primary font-size-12" />
-                                                            برنامه ریزی ایده نوآوری و نسل
-                                                        </li>
-                                                        <li className="list-group-item">
-                                                            <i className="fa fa-check pr-3 text-primary font-size-12" />{" "}
-                                                            بزرگ ارزش برند جهانی محصول است
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div className="block text-md">
+                                    <a href="#" className="my-4 block">
+                                        رمز عبور فراموش شده؟
+                                    </a>
+                                    <div className='flex items-center gap-2'>
+                                        <button onClick={handleLogin} className="py-2 px-6 text-white bg-blue-400 hover:bg-blue-300 cursor-pointer block rounded-lg">
+                                            ورود
+                                        </button>
+                                        <Link href='/auth/register'>ثبت نام</Link>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

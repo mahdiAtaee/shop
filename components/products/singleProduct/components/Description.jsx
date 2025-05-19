@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
-const Description = () => {
+const Description = (props) => {
   return (
     <div
       className="tab-pane fade show active"
@@ -9,17 +10,7 @@ const Description = () => {
       aria-labelledby="branding-tab"
     >
       <h4 className="mb-3">توضیحات</h4>
-      <p className="text-muted">
-        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-        طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-        با استفاده از طراحان گرافیک استلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم
-        از صنعت چاپ و با استفاده از طراحان گرافیک است
-      </p>
-      <p className="text-muted">
-        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-        طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-        لازم است
-      </p>
+      <p className="text-md text-gray-400">{props.describe}</p>
     </div>
 
   )

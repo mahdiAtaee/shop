@@ -5,18 +5,13 @@ import Details from './Details'
 
 const Basket = () => {
     return (
-        <section className="section-gap">
-            <div className="container">
-                <div className="row">
-                    <Items />
-                </div>
-                <div className="row">
-                    <Coupon />
-                    <Details />
-                </div>
+        <section className="w-dvw min-h-dvh flex flex-col md:flex-row items-start justify-between gap-4 my-6 p-6">
+            <Items />
+            <div className="w-full">
+                <Coupon />
+                <Details />
             </div>
         </section>
-
     )
 }
 

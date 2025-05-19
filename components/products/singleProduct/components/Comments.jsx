@@ -1,38 +1,44 @@
 /* eslint-disable react/prop-types */
+import { toPersianNumber } from '@/services/lang'
 import Image from 'next/image'
 import React from 'react'
+import ReactStars from 'react-stars'
 
-const Comments = ({comments}) => {
+const Comments = ({ comments, score }) => {
     return (
-        <div
-            className="tab-pane fade single-post"
-            id="frontend"
-            role="tabpanel"
-            aria-labelledby="frontend-tab"
-        >
-            <div className="comments">
+        <div>
+            <div className="comments flex items-start gap-8">
+                <div className='text-right flex flex-col items-start'>
+                    <h2 className=''>
+                        <span className='text-xl md:text-2xl ml-1'>{toPersianNumber(score)}</span>
+                        <span className='text-xs'>از ۵</span>
+                    </h2>
+                    <ReactStars half value={score} edit={false} size={20} />
+                    <p className='text-xs'>شما هم درباره این کالا دیدگاه ثبت کنید</p>
+                    <button className="py-2 px-4 my-4 rounded border border-blue-400 text-blue-400 cursor-pointer w-full">ثبت دیدگاه</button>
+                </div>
                 <ul>
                     {comments.map(comment => (
-                        <li key={comment.id} className="comment ">
+                        <li key={comment.id} className="comment my-4 border-b border-gray-200">
                             <article className="comment-body">
                                 <footer className="comment-meta">
-                                    <div className="comment-author">
-                                        <Image src={comment.user.avatar} width={45} height={45}/>
-                                        <b className="fn">
-                                            <a href="#" rel="external nofollow" className="url">
-                                                {`${comment.user.firstName} ${comment.user.lastName}`}
-                                            </a>
-                                        </b>
-                                        <span className="says">گفته:</span>
-                                    </div>
-                                    <div className="comment-metadata">
-                                        <a href="#">
-                                            <time >{comment.createdAt}</time>
-                                        </a>
+                                    <div className="comment-author flex items-center gap-1">
+                                        <Image src={comment.user.avatar} width={30} height={30} className='rounded-full' />
+                                        <div className='flex items-center text-xs gap-6'>
+                                            <b className="fn">
+                                                <a href="#" rel="external nofollow" className="url">
+                                                    {`${comment.user.firstName} ${comment.user.lastName}`}
+                                                </a>
+                                            </b>
+                                            {comment.isBuyer && (
+                                                <span className='py-1 px-2 text-xs bg-green-200 rounded'>خریدار</span>
+                                            )}
+                                            <time>{toPersianNumber(comment.createdAt)}</time>
+                                        </div>
                                     </div>
                                 </footer>
-                                <div className="comment-content">
-                                    <p>
+                                <div className="comment-content pr-18">
+                                    <p className='my-4 text-md text-gray-700'>
                                         {comment.body}
                                     </p>
                                 </div>
@@ -41,9 +47,7 @@ const Comments = ({comments}) => {
                     ))}
                 </ul>
             </div>
-            <a href="javascript:;" className="btn btn-theme">
-                یک بررسی اضافه کنید
-            </a>
+
         </div>
 
     )

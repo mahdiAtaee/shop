@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import ShopHeader from '../partials/Header'
 import ShopFooter from '../partials/Footer'
 import useAppContext from '@/context/useAppContext'
+import MobileMenu from '../partials/MobileMenu'
 
 const Shop = ({ children, title }) => {
     const { dispatch } = useAppContext()
@@ -36,6 +37,7 @@ const Shop = ({ children, title }) => {
             <ShopHeader />
             {children}
             <ShopFooter />
+            <MobileMenu />
         </div>
     )
 }

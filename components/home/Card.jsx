@@ -12,8 +12,8 @@ const Card = ({ products, title }) => {
             <div className='p-8 border border-gray-200 rounded-r-2xl'>
                 <div className='w-full flex items-center justify-between pb-3 font-vazir'>
                     <div>
-                        <span className='text-md'>محصولات ما</span>
-                        <p className='text-3xl font-iranSans'>
+                        <span className='text-xs md:text-md'>محصولات ما</span>
+                        <p className='text-xl md:text-3xl font-iranSans'>
                             <span className='text-dark-green'>{title} </span>
                             محصولات ما
                         </p>

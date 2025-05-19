@@ -5,3 +5,8 @@ export const amountWithDiscount = (amount, percent) => {
 export const calculateDiscountAmount = (amount, percent) => {
     return amount - amountWithDiscount(amount, percent)
 }
+
+export function formatNumberCurrency(number) {
+  const str = number.toString().replace(/\D/g, ''); // فقط ارقام
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

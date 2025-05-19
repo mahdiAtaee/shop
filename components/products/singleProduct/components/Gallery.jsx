@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import Image from 'next/image';
 
 const Gallery = ({ images }) => {
     images = [...images, ...images, ...images]
@@ -21,15 +22,12 @@ const Gallery = ({ images }) => {
         >
             {images.map((image, index) => (
                 <SwiperSlide key={index}>
-                    <a className='card border-0' style={{ height: '100%' }}>
-                        <img
-                            className="card-img rounded"
-                            style={{ objectFit: 'cover', height: '100%' }}
-                            src={image}
-                            alt="card image"
-                        />
-                    </a>
-
+                    <Image
+                        fill
+                        className='object-cover h-full'
+                        src={image}
+                        alt="card image"
+                    />
                 </SwiperSlide>
             ))}
             ...

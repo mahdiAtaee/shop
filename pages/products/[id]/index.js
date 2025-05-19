@@ -3,10 +3,10 @@ import * as API from '@/services/api'
 import ShopLayout from '@/components/layouts/Shop'
 import SingleProduct from '@/components/products/singleProduct'
 
-const index = ({ product,comments }) => {
+const index = ({ product, comments }) => {
     return (
         <ShopLayout title="فروشگاه تک">
-            <SingleProduct product={product} comments={comments}/>
+            <SingleProduct product={product} comments={comments} />
         </ShopLayout>
     )
 }
@@ -17,7 +17,11 @@ export async function getStaticProps(context) {
 
     const product = await API.get(`/products/${id}`)
     const comments = await API.get(`/products/${id}/comments`)
+
+    const category = product.data.category
+    console.log(product.data);
     
+    //const relatedProducts = await API.get(`/categories/slug/products`)
 
     return {
         props: {

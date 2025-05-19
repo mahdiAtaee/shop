@@ -5,8 +5,6 @@ import Image from 'next/image';
 
 
 const Latests = ({ products }) => {
-  console.log(products);
-
   return (
     <>
       <section className="mt-4 p-md-4">
@@ -15,7 +13,7 @@ const Latests = ({ products }) => {
             <FaFireFlameCurved color='orange' />
             <span>جدیدترین محصولات</span>
           </h2>
-          <div className='w-full h-max grid grid-cols-4 grid-rows-2 gap-4 my-8'>
+          <div className='w-full h-max grid grid-cols-[repeat(4,minmax(250px,1fr))] grid-rows-2 gap-4 my-8'>
             {products.map((product, index) => (
               <div key={product.id} className='w-full px-4 flex gap-4 min-h-32'>
                 <div className='w-24 h-auto relative basis-full'>

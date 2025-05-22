@@ -5,7 +5,7 @@ import IProductRepository from "../repositories/IProductRepository";
 import ITransformer from "../../contracts/ITransformer";
 import ProductTransformer from "./Transformer";
 import CommentMongoRepository from "../../comment/repositories/CommentMongoRepository";
-import CommentTransformer from "../../comment/CommentTransformer";
+import CommentTransformer from "../../comment/admin/CommentTransformer";
 
 
 class Controller {
@@ -34,8 +34,10 @@ class Controller {
     }
     public async find(req: Request, res: Response) {
         const { id } = req.params
-        const singleProduct = await this.productRepository.findOne(id as string, ['category'])
-
+        const singleProduct = await this.productRepository.findOne(id as string,['category'])
+        
+        
+        
         if (!singleProduct) {
             res.status(404).send({
                 success: false,

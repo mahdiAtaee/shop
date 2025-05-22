@@ -12,14 +12,19 @@ export default class ProductMongoRepository implements IProductRepository {
   }
   public async findOne(ID: string, relations?: string[]): Promise<IProducts | null> {
     const productQuery = ProductModel.findOne({ _id: ID })
-
+    
     if (relations && relations.length > 0) {
       relations.forEach((relation: string) => {
         productQuery.populate(relation)
       })
+    }    
+    try {
+        const product = await productQuery.exec();
+        return product;
+    } catch (error) {
+        console.error('Error finding product:', error);
+        return null;
     }
-
-    return productQuery.exec();
   }
   public async findMany(params: any, relations?: string[], pagination?: IPagination, sort?: any): Promise<IProducts[]> {
     const productQueryParams: IObjectParams = { ...params }

@@ -1,7 +1,7 @@
-import { buildAvatar } from "../../services/AvatarService";
-import DateService from "../../services/DateService";
-import ITransformer from "../contracts/ITransformer";
-import IComments from "./model/IComment";
+import { buildAvatar } from "../../../services/AvatarService";
+import DateService from "../../../services/DateService";
+import ITransformer from "../../contracts/ITransformer";
+import IComments from "../model/IComment";
 
 export default class CommentTransformer implements ITransformer<IComments> {
     private readonly DateService: DateService;

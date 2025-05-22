@@ -15,6 +15,9 @@ import CouponRouter from '../components/coupon/front/Router'
 import authRouter from '../components/auth/authRouter'
 import purchaseRouter from '../components/purchase/Router'
 import HomeRouter from '../components/home/Router'
+import commentRouter from '../components/comment/front/CommentRouter'
+import commentAdminRouter from '../components/comment/admin/CommentRouter'
+
 
 class RouteService {
   public app: Application;
@@ -34,6 +37,7 @@ class RouteService {
     this.router.registerRouter("/api/v1/admin/payments", paymentAdminRouter)
     this.router.registerRouter("/api/v1/admin/orders", OrderAdminRouter)
     this.router.registerRouter("/api/v1/admin/categories", CategoryAdminRouter)
+    this.router.registerRouter("/api/v1/admin/comments", commentAdminRouter)
 
     //front
     this.router.registerRouter("/api/v1/products", productRouter);
@@ -45,6 +49,7 @@ class RouteService {
     this.router.registerRouter("/api/v1/coupons", CouponRouter)
     this.router.registerRouter("/api/v1/home", HomeRouter)
     this.router.registerRouter("/api/v1/orders", OrderRouter);
+    this.router.registerRouter("/api/v1/comments", commentRouter)
   }
 
   public run() {

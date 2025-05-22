@@ -6,6 +6,8 @@ import CategoryMongoRepository from "../repositories/CategoryMongoRepository";
 import ICategoryRepository from "../repositories/ICategoryRepository";
 import CategoryTransformer from "./CategoryTransformer";
 import ITransformer from "../../contracts/ITransformer";
+import NotFoundException from "../../exceptions/NotFoundException";
+import { v4 as uuid } from 'uuid'
 
 class CategoryController {
   private readonly categoryRepository: ICategoryRepository
@@ -19,6 +21,12 @@ class CategoryController {
 
   public async store(req: Request, res: Response, next: NextFunction) {
     try {
+      const data = {
+        ...req.body,
+        hash: uuid()
+      }
+      console.log(data);
+      
       const newCategory = await Category.create({ ...req.body });
       return res.send({ success: true, newCategory });
     } catch (error) {
@@ -38,17 +46,26 @@ class CategoryController {
     }
   }
 
-  public async attributes(req: Request, res: Response) {
-    const categoryID = req.params.id;
-    const category = await Category.findById(categoryID);
-    res.send(
-      category?.filterGroups.map((group) => {
-        return {
-          title: group.name,
-          attributes: group.filters,
-        };
-      })
-    );
+  public async attributes(req: Request, res: Response, next: NextFunction) {
+    try {
+      const categoryID = req.params.id;
+      const category = await Category.findById(categoryID);
+      if (!category) {
+        throw new NotFoundException("دسته بندی مورد نظر یافت نشد")
+      }
+      res.send(
+        category.filterGroups.map((group) => {
+          return {
+            hash: group.hash,
+            name: group.name,
+            attributes: group.filters,
+          };
+        })
+      );
+
+    } catch (error) {
+      next(error)
+    }
   }
 
   public async parentList(req: Request, res: Response, next: NextFunction) {

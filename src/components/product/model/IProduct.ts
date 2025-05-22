@@ -25,4 +25,5 @@ export default interface IProducts extends Document {
   total_score: number,
   views_count: number,
   status: ProductStatus;
+  description: string
 }

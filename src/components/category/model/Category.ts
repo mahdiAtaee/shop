@@ -26,6 +26,7 @@ const categorySchema: Schema = new Schema({
   filterGroups: [ // گروه‌های فیلتر
     {
       name: { type: String, required: true },
+      hash: { type: String },
       slug: { type: String, required: true }, // شناسه منحصر به فرد گروه
       filters: [ // فیلترهای این گروه
         {
@@ -59,6 +60,10 @@ categorySchema.pre('save', async function (next) {
   next();
 });
 
+categorySchema.virtual('iconUrl').get(function (this: ICategory) {
+  return `${process.env.APP_URL}/contents/${this.icon}`
+})
+
 // ایندکس‌های مهم
 categorySchema.index({ parentId: 1, isActive: 1 });
 categorySchema.index({ slug: 1 }, { unique: true });
@@ -66,5 +71,6 @@ categorySchema.index({ slug: 1 }, { unique: true });
 categorySchema.set("toJSON", {
   virtuals: true,
 });
+
 
 export default model<ICategory>("Categories", categorySchema);

@@ -7,6 +7,7 @@ class CategoryTransformer implements ITransformer<ICategory> {
     constructor() { }
     transform(item: ICategory) {
         return {
+            id: item._id,
             name: item.name,
             slug: item.slug,
             isActive: item.isActive,

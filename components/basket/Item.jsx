@@ -30,7 +30,7 @@ const Item = (product) => {
     }
 
     return (
-        <li className='w-full flex items-center gap-4 shadow shadow-gray-300 rounded-2xl p-6 my-4'>
+        <li className='w-full flex flex-col md:flex-row items-center gap-4 shadow shadow-gray-300 rounded-2xl p-6 my-4'>
             <div className="md:basis-lg flex items-center gap-2">
                 <a href="#" className="mr-4">
                     <Image

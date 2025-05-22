@@ -6,9 +6,10 @@ import Description from './components/Description'
 import Attributes from './components/Attributes'
 import Comments from './components/Comments'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import Card from '@/components/home/Card'
 
 
-const SingleProduct = ({ product, comments }) => {
+const SingleProduct = ({ product, comments, relatedProducts }) => {
     return (
         <section className="w-dvw min-h-dvh overflow-x-hidden">
             <div className='w-screen grid grid-cols-1 gird-rows-2 md:grid-cols-2 md:grid-rows-1 gap-8 p-4'>
@@ -71,6 +72,9 @@ const SingleProduct = ({ product, comments }) => {
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>
+            </div>
+            <div className='w-screen my-6'>
+                <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts.category.name.FA}`} />
             </div>
         </section>
     )

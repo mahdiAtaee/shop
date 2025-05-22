@@ -7,7 +7,7 @@ const Items = () => {
 
     return (
 
-        <div className="w-full">
+        <div className="w-full flex-3/4 grow">
             <ul>
                 {state.basket.map((item) => <Item key={item.productID} {...item} />)}
             </ul>

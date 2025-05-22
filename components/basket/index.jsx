@@ -7,7 +7,7 @@ const Basket = () => {
     return (
         <section className="w-dvw min-h-dvh flex flex-col md:flex-row items-start justify-between gap-4 my-6 p-6">
             <Items />
-            <div className="w-full">
+            <div className="w-full basis-xs">
                 <Coupon />
                 <Details />
             </div>

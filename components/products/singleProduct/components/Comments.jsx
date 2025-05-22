@@ -1,13 +1,24 @@
 /* eslint-disable react/prop-types */
 import { toPersianNumber } from '@/services/lang'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import ReactStars from 'react-stars'
+import Modal from 'react-modal';
+import NewComment from './NewComment';
+Modal.setAppElement('body');
 
 const Comments = ({ comments, score }) => {
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const handleOpenModal = () => {
+        setModalIsOpen(true)
+    }
+    const onClose = () => {
+        setModalIsOpen(false)
+    }
+
     return (
         <div>
-            <div className="comments flex items-start gap-8">
+            <div className="comments flex flex-col md:flex-row items-start gap-8">
                 <div className='text-right flex flex-col items-start'>
                     <h2 className=''>
                         <span className='text-xl md:text-2xl ml-1'>{toPersianNumber(score)}</span>
@@ -15,7 +26,8 @@ const Comments = ({ comments, score }) => {
                     </h2>
                     <ReactStars half value={score} edit={false} size={20} />
                     <p className='text-xs'>شما هم درباره این کالا دیدگاه ثبت کنید</p>
-                    <button className="py-2 px-4 my-4 rounded border border-blue-400 text-blue-400 cursor-pointer w-full">ثبت دیدگاه</button>
+                    <button onClick={handleOpenModal} className="py-2 px-4 my-4 rounded border border-blue-400 text-blue-400 cursor-pointer w-full">ثبت دیدگاه</button>
+                    <NewComment closeModal={onClose} modalIsOpen={modalIsOpen} />
                 </div>
                 <ul>
                     {comments.map(comment => (

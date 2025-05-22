@@ -5,20 +5,13 @@ import ProductItem from './ProductItem'
 const ProductList = ({ products }) => {
     return (
         <section className="section-gap">
-            <div className="container">
-                <div className="row justify-content-center">
+                <div className="w-full p-8 grid grid-cols-4 gap-2">
                     {products.map((product) => (
-                        <div key={product.id} className='col-6 col-md-4'>
+                        <div key={product.id} className='shadow shadow-gray-700 rounded'>
                             <ProductItem {...product}/>
                         </div>
                     ))}
-                    <div className="col-md-12 text-center mt-4">
-                        <a href="#" className="btn btn-pill btn-theme">
-                            ادامه خواندن
-                        </a>
-                    </div>
                 </div>
-            </div>
         </section>
 
     )

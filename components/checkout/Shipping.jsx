@@ -28,7 +28,7 @@ const Shipping = () => {
 
 
     return (
-        <div className="col-md-8 order-md-1">
+        <div className="flex-2/3">
             <div className="card border-0 row no-gutters p-3 box-hover">
                 {isUserLoggedIn && <Addresses addresses={state.user.addresses} />}
                 {isUserLoggedIn && <PaymentForm gateways={gateways} />}

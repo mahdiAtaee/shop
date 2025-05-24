@@ -18,7 +18,7 @@ export async function getStaticProps(context) {
     const product = await API.get(`/products/${id}`)
     const comments = await API.get(`/products/${id}/comments`)
     let relatedProducts
-    if (product.status == 200) {
+    if (product.status == 200 && product.data && product.data.category != null) {
         const { slug } = product.data.category
         relatedProducts = await API.get(`/categories/${slug}/products`)
     }
@@ -27,7 +27,7 @@ export async function getStaticProps(context) {
         props: {
             product: product.data,
             comments: comments.data,
-            relatedProducts: relatedProducts.data
+            relatedProducts: relatedProducts?.data ? relatedProducts.data : []
         }
     }
 

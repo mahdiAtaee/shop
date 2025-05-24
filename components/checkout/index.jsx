@@ -4,13 +4,9 @@ import Shipping from './Shipping'
 
 const index = () => {
     return (
-        <section className="section-gap">
-            <div className="container">
-                <div className="row">
-                    <BasketList />
-                    <Shipping />
-                </div>
-            </div>
+        <section className="w-screen flex flex-col gap-2 p-6">
+            <BasketList />
+            <Shipping />
         </section>
 
     )

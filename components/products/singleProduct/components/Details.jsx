@@ -79,9 +79,9 @@ const Details = ({ product }) => {
                         <BiSolidStar color='orange' />
                         {toPersianNumber(product.totalScore)}
                     </span>
-                    <span className='flex items-center rounded-lg bg-gray-200 text-black py-1 px-2'>
-                        {toPersianNumber(product.commentCount)}
-                        دیدگاه
+                    <span className='flex gap-1 items-center rounded-lg bg-gray-200 text-black py-1 px-2 text-xs'>
+                        <span>{toPersianNumber(product.commentCount)}</span>
+                        <span>دیدگاه</span>
                     </span>
                 </div>
             </div>

@@ -24,8 +24,10 @@ const PaymentForm = ({ gateways }) => {
 
     return (
         <>
-            <h4 className="mb-3">پرداخت</h4>
-            <div className="d-block my-3">
+            <div className='w-full border border-gray-300 rounded-t-xl py-2 px-4 my-4 bg-black text-white'>
+                <h6>پرداخت</h6>
+            </div>
+            <div className="w-full px-4 pb-4">
                 {gateways && gateways.map((gateway, index) => (
                     <div key={index} className="custom-control custom-radio">
                         <input
@@ -42,7 +44,7 @@ const PaymentForm = ({ gateways }) => {
                 ))}
             </div>
             <hr className="mb-4" />
-            <button onClick={SubmitOrder} className="btn btn-primary btn-lg btn-block" type="submit">
+            <button onClick={SubmitOrder} className="w-full py-2 px-4 bg-blue-400 text-white rounded my-4 cursor-pointer hover:bg-blue-300 hover:text-white transition duration-300" type="submit">
                 پرداخت
             </button>
         </>

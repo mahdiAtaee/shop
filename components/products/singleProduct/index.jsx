@@ -74,7 +74,8 @@ const SingleProduct = ({ product, comments, relatedProducts }) => {
                 </TabGroup>
             </div>
             <div className='w-screen my-6'>
-                <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts.category.name.FA}`} />
+                {relatedProducts.length > 0 &&
+                    <Card products={relatedProducts.products} title={`کالاهای مشابه در دسته بندی ${relatedProducts.category.name.FA}`} />}
             </div>
         </section>
     )

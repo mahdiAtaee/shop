@@ -38,55 +38,52 @@ const AddressForm = () => {
         }
     }
     return (
-        <form className="needs-validation" noValidate="">
-            <div className="row">
-                <div className="col-md-6 mb-3">
-                    <label htmlFor="fullName">نام کامل گیرنده</label>
+        <form className='w-full'>
+            <div className="flex flex-col lg:flex-row items-center justify-stretch gap-6 my-4">
+                <div className="flex-1/2 flex flex-col w-full">
+                    <label htmlFor="fullName" className='text-xs md:text-md py-1'>نام کامل گیرنده</label>
                     <input
                         type="text"
                         onChange={e => handleChange('fullName', e.target.value)}
-                        className="form-control"
+                        className="py-2 px-6 rounded border border-gray-300 text-xs md:text-md"
                         id="fullName"
                         placeholder=""
                         defaultValue=""
                         required=""
                     />
-                    <div className="invalid-feedback">نام معتبر مورد نیاز است</div>
                 </div>
-                <div className="col-md-6 mb-3">
-                    <label htmlFor="mobile">شماره موبایل</label>
+                <div className="flex-1/2 flex flex-col w-full">
+                    <label htmlFor="mobile" className='text-xs md:text-md py-1'>شماره موبایل</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="py-2 px-6 rounded border border-gray-300 text-xs md:text-md"
                         id="mobile"
                         placeholder=""
                         defaultValue=""
                         required=""
                         onChange={e => handleChange('mobile', e.target.value)}
                     />
-                    <div className="invalid-feedback">موبایل معتبر مورد نیاز است</div>
                 </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="title">
-                    عنوان <span className="text-muted">(اختیاری)</span>
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    placeholder=""
-                    onChange={e => handleChange('title', e.target.value)}
-                />
-                <div className="invalid-feedback">
-                    لطفا یک آدرس ایمیل معتبر برای ارسال به روز رسانی وارد کنید
+            <div className="flex flex-col lg:flex-row items-center justify-stretch gap-6 my-4">
+                <div className='flex-1 flex flex-col w-full text-xs md:text-md'>
+                    <label htmlFor="title">
+                        عنوان <span className="text-xs">(اختیاری)</span>
+                    </label>
+                    <input
+                        type="text"
+                        className="py-2 px-6 rounded border border-gray-300"
+                        id="title"
+                        placeholder=""
+                        onChange={e => handleChange('title', e.target.value)}
+                    />
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-5 mb-3">
-                    <label htmlFor="state">استان</label>
+            <div className="flex flex-col lg:flex-row items-center justify-stretch gap-6 my-4">
+                <div className="flex-1/3 flex flex-col text-xs md:text-md w-full">
+                    <label htmlFor="state" className='text-md py-1'>استان</label>
                     <select
-                        className="custom-select d-block w-100"
+                        className="w-full border border-gray-300 py-2 px-4 rounded outline-0 d-block lg:w-100"
                         onChange={e => handleChange('state', e.target.value)}
                         id="state"
                         required=""
@@ -94,14 +91,11 @@ const AddressForm = () => {
                         <option value="">انتخاب...</option>
                         <option value='تهران' >تهران</option>
                     </select>
-                    <div className="invalid-feedback">
-                        لطفا یک استان معتبر را انتخاب کنید
-                    </div>
                 </div>
-                <div className="col-md-4 mb-3">
-                    <label htmlFor="city">شهر</label>
+                <div className="flex-1/3 flex flex-col text-xs md:text-md w-full">
+                    <label htmlFor="city" className='text-md py-1'>شهر</label>
                     <select
-                        className="custom-select d-block w-100"
+                        className="border border-gray-300 py-2 px-4 rounded outline-0 d-block w-full lg:w-100"
                         id="city"
                         required=""
                         onChange={e => handleChange('city', e.target.value)}
@@ -109,38 +103,33 @@ const AddressForm = () => {
                         <option value="">انتخاب...</option>
                         <option value="پردیس">پردیس</option>
                     </select>
-                    <div className="invalid-feedback">لطفا یک شهر معتبر ارائه کنید</div>
                 </div>
-                <div className="col-md-3 mb-3">
-                    <label htmlFor="zipCode">کد پستی</label>
+                <div className="flex-1/3 flex flex-col text-xs md:text-md w-full">
+                    <label htmlFor="zipCode" className='text-md py-1'>کد پستی</label>
                     <input
                         type="text"
                         name='zipCode'
-                        className="form-control"
+                        className="py-2 px-6 rounded border border-gray-300"
                         id="zipCode"
                         placeholder=""
                         required=""
                         onChange={e => handleChange('zipCode', e.target.value)}
                     />
-                    <div className="invalid-feedback">کد پستی مورد نیاز است</div>
                 </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="address">آدرس</label>
+            <div className="flex flex-col text-xs md:text-md w-full">
+                <label htmlFor="address" className='text-md py-1'>آدرس</label>
                 <input
                     type="text"
                     name='address'
-                    className="form-control"
+                    className="py-2 px-2 md:px-6 rounded border border-gray-300"
                     id="address"
                     placeholder="خیابان آذر پلاک 11"
                     required=""
                     onChange={e => handleChange('address', e.target.value)}
                 />
-                <div className="invalid-feedback">
-                    لطفا آدرس حمل و نقل خود را وارد کنید.
-                </div>
             </div>
-            <button onClick={addAddress} type='button' className="btn btn-primary btn-lg btn-block">
+            <button onClick={addAddress} type='button' className="text-xs md:text-md py-2 px-4 border border-gray-700 text-gray-700 rounded my-4 cursor-pointer hover:bg-gray-700 hover:text-white transition duration-300">
                 ثبت آدرس
             </button>
         </form>

@@ -9,7 +9,10 @@ const Details = () => {
 
     const TotalBasket = () => {
         return state.basket.reduce((total, item) => {
-            return total + (item.count * item.discountedPrice)
+            if (item.discountedPrice != 0) {
+                return total + (item.count * item.discountedPrice)
+            }
+            return total + (item.count * item.price)
         }, 0)
     }
 

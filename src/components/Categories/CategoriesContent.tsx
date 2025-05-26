@@ -63,13 +63,16 @@ const CategoriesContent = () => {
   });
   const [categories, setCategories] = useState<ICategoryItem[]>()
   const httpClient = new Http();
-
+  
 
   useEffect(() => {
     httpClient
-      .get<ICategoryItem[]>(`api/v1/admin/categories`)
+      .get(`api/v1/admin/categories`)
       .then((response) => {
-        setCategories(response.data);
+        const data = response.data as { success: boolean; categories: ICategoryItem[] };
+        if (data.success) {
+          setCategories(data.categories);
+        }
       })
       .catch((error) => console.log(error.message));
   }, []);
@@ -245,7 +248,7 @@ const CategoriesContent = () => {
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               child: React.ReactNode) => updateCategoryParent(event.target.value)}
           >
-            {categories?.map((item: ICategoryItem) => (
+            {categories && categories?.map((item: ICategoryItem) => (
               <MenuItem key={item.id} value={item.id}>{item.name ? item.name.FA : ''}</MenuItem>
             ))}
           </Select>

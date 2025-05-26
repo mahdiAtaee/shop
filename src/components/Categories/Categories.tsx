@@ -9,7 +9,6 @@ const Categories = () => {
   useEffect(() => {
     const httpClient = new Http();
     httpClient.get("api/v1/admin/categories").then((response) => {
-      console.log(response.data);
       const data = response.data as { success: boolean; categories: ICategoryItem[] };
       if (data.success) {
         setCategories(data.categories);

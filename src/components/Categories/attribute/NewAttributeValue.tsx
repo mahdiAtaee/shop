@@ -4,6 +4,7 @@ import FilterValueEnum from './FilterValueEnum'
 import { makeStyles, createStyles } from "@mui/styles";
 import BadgeInput from './BadgeInput';
 import { useCategoriesState } from '../context';
+import { v4 as uuid } from 'uuid';
 
 // STYLES
 function important<T>(value: T): T {
@@ -44,7 +45,7 @@ const NewAttributeValue = ({ hash }: INewAttributeValueProps) => {
         const value = e.target.value
         dispatch({
             type: "UPDATE_ATTRIBUTE_TYPE",
-            payload: { type: value }
+            payload: { type: value, hash }
         })
     }
 
@@ -52,7 +53,7 @@ const NewAttributeValue = ({ hash }: INewAttributeValueProps) => {
         const value = e.target.value
         dispatch({
             type: "UPDATE_ATTRIBUTE_NAME",
-            payload: { name: value }
+            payload: { name: value, hash }
         })
     }
 
@@ -60,7 +61,7 @@ const NewAttributeValue = ({ hash }: INewAttributeValueProps) => {
         const value = e.target.value
         dispatch({
             type: "UPDATE_ATTRIBUTE_SLUG",
-            payload: { slug: value }
+            payload: { slug: value, hash }
         })
     }
 

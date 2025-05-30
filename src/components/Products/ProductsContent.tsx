@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabase";
 import Content from "../partial/Content";
 import {
   Button,
@@ -18,6 +19,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  TextareaAutosize,
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import Section from "../partial/Section";
@@ -34,6 +39,9 @@ import VariantSelect from "./variations/VariantSelect";
 import * as Validator from "./ProductValidator";
 import IAttributeItem from "../Categories/attribute/IAttributeItem";
 import FilterValueEnum from "../Categories/attribute/FilterValueEnum";
+import ImageUploader from "../partial/ImageUploader";
+import { ImageListType } from "react-images-uploading";
+
 
 function important<T>(value: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,6 +54,27 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+const saveImage = async (file: File): Promise<string | null> => {
+  const fileName = `${Date.now()}-${file.name}`
+  const { data, error } = await supabase.storage
+    .from("images")
+    .upload(fileName, file)
+
+  if (error) {
+    console.log(error);
+
+    alert("آپلود ناموفق بود")
+    return null
+  }
+
+  // گرفتن URL عمومی فایل
+  const { data: publicUrl } = await supabase.storage
+    .from("images")
+    .getPublicUrl(fileName)
+
+  return publicUrl?.publicUrl
+}
 
 interface IProductAttributeItem {
   filterGroupId: string,
@@ -86,20 +115,22 @@ const ProductsContent = () => {
     useState<boolean>(false);
   const [categories, setCategories] = useState<ICategoryItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('')
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [gallery, setGallery] = useState<File[]>([]);
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [gallery, setGallery] = useState<string[]>([]);
   const [title, setTitle] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [discountedPrice, setDiscountedPrice] = useState<number>(0);
   const [stock, setStock] = useState<number>(0);
+  const [description, setDescription] = useState<string>('')
   const [productAttribute, setProductAttribute] = useState<IProductAttribute[]>(
     []
   );
-  const [newProductAttribute, setNewProductAttribute] = useState<IProductAttributeItem>()
+  const [newProductAttribute, setNewProductAttribute] = useState<IProductAttributeItem[]>()
   const [progress, setProgress] = useState<number>(0);
   const [errorBag, setErrorBag] = useState<Map<string, string>>(
     new Map<string, string>()
   );
+
   useEffect(() => {
     httpClient
       .get("api/v1/admin/categories")
@@ -169,6 +200,8 @@ const ProductsContent = () => {
         `api/v1/admin/categories/${event.target.value}/attributes`
       )
       .then((response) => {
+        console.log(response.data);
+
         setProductAttribute(response.data);
       })
       .catch((error) => {
@@ -177,14 +210,22 @@ const ProductsContent = () => {
     setSelectedCategory(event.target.value)
   };
 
-  const updateThumbnail = (file: File) => {
-    setThumbnail(file);
+  const updateThumbnail = async (files: ImageListType) => {
+    files.map(async (image) => {
+      const pictureData = await saveImage(image.file as File);
+      if (pictureData) {
+        setThumbnail(pictureData);
+      }
+    })
   };
 
-  const updateGallery = (file: File) => {
-    setGallery((prev: File[]) => {
-      return [...prev, file];
-    });
+  const updateGallery = async (files: ImageListType) => {
+    files.map(async (image) => {
+      const pictureData = await saveImage(image.file as File)
+      setGallery((prev: string[]) => {
+        return [...prev, pictureData as unknown as string];
+      });
+    })
   };
 
   const saveProduct = (e: React.MouseEvent) => {
@@ -195,12 +236,13 @@ const ProductsContent = () => {
     form.append("price", price as unknown as string);
     form.append("discountedPrice", discountedPrice as unknown as string);
     form.append("stock", stock as unknown as string);
-    form.append("thumbnail", thumbnail as Blob);
+    form.append("description", description);
+    form.append("thumbnail", thumbnail as unknown as Blob);
     form.append("category", selectedCategory);
     form.append("variation", JSON.stringify(variations));
     form.append("priceVariation", JSON.stringify(priceVariations));
-    gallery.forEach((file: File) => {
-      form.append("gallery", file as Blob);
+    gallery.forEach((file: string) => {
+      form.append("gallery", file);
     });
     form.append("attributes", JSON.stringify(newProductAttribute))
     //form.append("attributes", JSON.stringify(productAttribute));
@@ -210,6 +252,7 @@ const ProductsContent = () => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      withCredentials: true,
       onUploadProgress: (progressEvent) => {
         const percent =
           progressEvent.total &&
@@ -218,39 +261,38 @@ const ProductsContent = () => {
       },
     });
   };
-
+  
   const handleChangeAttribute = (
     e: React.ChangeEvent<HTMLInputElement>,
-    hash: string
+    hash: string,
+    slug: string,
+    groupID: string,
   ) => {
     e.preventDefault();
-    updateAttributeByHash(hash, e.target.value, "");
+    updateAttributeByHash(hash, e.target.value, slug, groupID);
   };
 
   const handleChangeItemValue = (e: SelectChangeEvent<string>, hash: string, slug: string, groupId: string) => {
     e.preventDefault()
-    setNewProductAttribute({
-      filterGroupId: groupId,
-      filterKey: slug,
-      value: e.target.value,
-    })
+    setNewProductAttribute(prev => [
+      ...(prev ?? []),
+      {
+        filterGroupId: groupId,
+        filterKey: slug,
+        value: e.target.value,
+      }
+    ])
   }
 
-  const updateAttributeByHash = debounce((hash: string, value: string, slug: string) => {
-    setProductAttribute(
-      productAttribute.map((group: IProductAttribute) => {
-        const newAttribute = group.attributes.map(
-          (attribute: IAttributeItem) => {
-            if (attribute.hash === hash) {
-              return { ...attribute, value, hash, slug };
-            }
-            return attribute;
-          }
-        );
-        group.attributes = newAttribute;
-        return group;
-      })
-    );
+  const updateAttributeByHash = debounce((hash: string, value: string, slug: string, groupID: string) => {
+    setNewProductAttribute(prev => [
+      ...(prev ?? []),
+      {
+        filterGroupId: groupID,
+        filterKey: slug,
+        value,
+      }
+    ])
   }, 1000);
 
   const handleChangeVariationTitle = (
@@ -258,11 +300,13 @@ const ProductsContent = () => {
   ) => {
     setNewVariationTitle(e.target.value);
   };
+
   const handleChangeVariationType = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setNewVariationType(e.target.value);
   };
+
   const handleChangeVariationName = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -290,6 +334,7 @@ const ProductsContent = () => {
   const addPriceVariantItem = (type: string, value: string) => {
     setPriceVariation((prev) => ({ ...prev, [type]: value }));
   };
+
   const addPriceVariant = (e: React.MouseEvent) => {
     e.preventDefault();
     setPriceVariations((prev) => [
@@ -382,7 +427,7 @@ const ProductsContent = () => {
           helperText={errorBag.has("price") && errorBag.get("price")}
           id="price"
           name="price"
-          label="قیمت به ریال"
+          label="قیمت به تومان"
           variant="outlined"
         />
       </FormControl>
@@ -408,6 +453,17 @@ const ProductsContent = () => {
           name="stock"
           label="موجودی"
           variant="outlined"
+        />
+      </FormControl>
+      <FormControl fullWidth className={styles.formRow}>
+        <TextareaAutosize
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+          value={description}
+          minRows={3}
+          id="description"
+          name="description"
+          placeholder="توضیحات کالا"
+          style={{ width: '100%', borderRadius: '5px', borderColor: "#aaa", padding: '1rem 0.5rem', fontFamily: 'vazirMatn', outline: 'none' }}
         />
       </FormControl>
       <Grid2 container>
@@ -436,79 +492,83 @@ const ProductsContent = () => {
         </Grid2>
       </Grid2>
       <Section title="تصویر شاخص">
-        <ImageInput onChange={updateThumbnail} />
+        <ImageUploader isMultiple={false} maxAcceptImage={1} handleChange={updateThumbnail} />
       </Section>
       <Section title="گالری تصاویر">
-        <Grid2 container>
-          <Grid2 size={{ xs: 12, md: 4 }}>
-            <ImageInput onChange={updateGallery} />
-          </Grid2>
-          <Grid2 size={{ xs: 12, md: 4 }}>
-            <ImageInput onChange={updateGallery} />
-          </Grid2>
-          <Grid2 size={{ xs: 12, md: 4 }}>
-            <ImageInput onChange={updateGallery} />
-          </Grid2>
-        </Grid2>
+        <ImageUploader isMultiple={true} maxAcceptImage={10} handleChange={updateGallery} />
       </Section>
       {productAttribute.length > 0 ? (
         <Section title="مشخصات محصول">
           {productAttribute.map((group: IProductAttribute) => {
-            return (
-              <>
-                <Typography variant="h6">{group.name}</Typography>
-                <Divider />
-                {group.attributes.map((attribute: IAttributeItem, index) => (
-                  <FormControl key={index} fullWidth className={styles.formRow}>
-                    {attribute.type == FilterValueEnum.TEXT || attribute.type == FilterValueEnum.NUMBER &&
-                      <TextField
-                        label={attribute.name.fa}
-                        variant="outlined"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          handleChangeAttribute(e, attribute.hash);
-                        }}
-                      />
-                    }
-                    {attribute.type as FilterValueEnum == FilterValueEnum.SELECT &&
-                      <>
-                        <InputLabel id="attribute_value_label">{attribute.name.fa}</InputLabel>
-                        <Select
-                          labelId="attribute_value_label"
-                          id="attribute_value"
+            if (group) {
+              return (
+                <div key={group.hash}>
+                  <Typography variant="h6">{group.name}</Typography>
+                  <Divider />
+                  {group.attributes.map((attribute: IAttributeItem, index) => (
+                    <FormControl key={index} fullWidth className={styles.formRow}>
+                      {attribute.type as FilterValueEnum == FilterValueEnum.TEXT &&
+                        <TextField
                           label={attribute.name.fa}
-                          onChange={(e: SelectChangeEvent<string>, child: React.ReactNode) => handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash)}
-                        >
-                          <MenuItem value={0}>{attribute.name.fa} را انتخاب کنید</MenuItem>
-                          {attribute?.values?.map((value, index) => (
-                            <MenuItem key={index} value={value}>
-                              {value}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </>
-                    }
-                    {attribute.type == FilterValueEnum.MULTI_SELECT &&
-                      <>
-                        <InputLabel id="attribute_value_label">{attribute.name.fa}</InputLabel>
-                        <Select
-                          labelId="attribute_value_label"
-                          id="attribute_value"
+                          variant="outlined"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            handleChangeAttribute(e, attribute.hash, attribute.slug, group.hash);
+                          }}
+                        />
+                      }
+                      {attribute.type as FilterValueEnum == FilterValueEnum.NUMBER &&
+                        <TextField
+                          type="number"
                           label={attribute.name.fa}
-                          onChange={(e: SelectChangeEvent<string>, child: React.ReactNode) => handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash)}
-                        >
-                          <MenuItem value={0}>${attribute.name.fa} را انتخاب کنید</MenuItem>
-                          {attribute?.values?.map((value) => (
-                            <MenuItem key={attribute.hash} value={attribute.hash}>
-                              {value}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </>
-                    }
-                  </FormControl>
-                ))}
-              </>
-            );
+                          variant="outlined"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            handleChangeAttribute(e, attribute.hash, attribute.slug, group.hash);
+                          }}
+                        />
+                      }
+                      {attribute.type as FilterValueEnum == FilterValueEnum.SELECT &&
+                        <>
+                          <InputLabel id="attribute_value_label">{attribute.name.fa}</InputLabel>
+                          <Select
+                            labelId="attribute_value_label"
+                            id="attribute_value"
+                            label={attribute.name.fa}
+                            onChange={(e: SelectChangeEvent<string>, child: React.ReactNode) => handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash)}
+                          >
+                            <MenuItem value={0}>{attribute.name.fa} را انتخاب کنید</MenuItem>
+                            {attribute?.values?.map((value, index) => (
+                              <MenuItem key={index} value={value}>
+                                {value}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </>
+                      }
+                      {attribute.type == FilterValueEnum.MULTI_SELECT &&
+                        <FormGroup>
+                          {attribute.values.map((value, index) => {
+                            return (
+                              <FormControlLabel
+                                key={index}
+                                control={
+                                  <Checkbox
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                      handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash);
+                                    }}
+                                  />
+                                }
+                                label={value}
+                              />
+                            );
+                          })}
+                        </FormGroup>
+                      }
+                    </FormControl>
+                  ))}
+                </div>
+              );
+            }
+            return null
           })}
         </Section>
       ) : null}

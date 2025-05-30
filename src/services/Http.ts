@@ -5,6 +5,7 @@ export default class Http {
   private instance: AxiosInstance;
 
   constructor() {
+    // this.baseURL = "https://deployshop.onrender.com";
     this.baseURL = "http://localhost:5000";
     this.instance = axios.create();
   }

@@ -48,7 +48,7 @@ const ImageInput = ({ onChange }: ImageInputProps) => {
         type="file"
         ref={filesRef}
         onChange={handleChange}
-        accept="image/gif, .jpg, image/png"
+        accept="image/gif, .jpg, image/png, .webp"
       />
     </Box>
   );

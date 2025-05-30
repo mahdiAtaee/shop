@@ -19,7 +19,7 @@ export const initState: ICategoryItem = {
       hash: uuid(),
       name: "مشخصات کلی",
       slug: "General-Specifications",
-      filters: []
+      filters: []      
     },
   ],
 };
@@ -45,14 +45,17 @@ export const reducer = (
         ],
       };
       break;
-    case "ADD_ATTRIBUTE":
+    case "ADD_ATTRIBUTE":      
       newState = {
         ...state,
         filterGroups: state.filterGroups.map((group) => {
           if (group.hash === payload.groupID) {
             return {
               ...group,
-              filters: [...group.filters, payload.filters]
+              filters: [...group.filters, {
+                hash: uuid(),
+                ...payload.filters
+              }]
             };
           }
           return group;

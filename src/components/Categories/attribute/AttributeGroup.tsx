@@ -13,6 +13,7 @@ import { makeStyles, createStyles } from "@mui/styles";
 import { AddBox, Delete } from "@mui/icons-material";
 import { useCategoriesState } from "../context";
 import NewAttributeValue from "./NewAttributeValue";
+import { v4 as uuid } from "uuid";
 
 function important<T>(value: T): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +42,7 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
   const { state, dispatch } = useCategoriesState();
   const handleAddAttribute = (e: React.MouseEvent) => {
     e.preventDefault();
+    
     dispatch({
       type: "ADD_ATTRIBUTE",
       payload: {
@@ -48,6 +50,8 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
         filters: [],
       },
     });
+    console.log(state);
+
   };
   const handleDeleteAttributeGroup = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -77,8 +81,8 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
       </Box>
       <Divider />
 
-      {filters.map(filter => (
-        <NewAttributeValue key={filter.hash} hash={filter.hash} />
+      {filters.map((filter,index) => (
+        <NewAttributeValue key={index} hash={filter.hash} />
       ))}
 
       <FormControl className={styles.formControl}>

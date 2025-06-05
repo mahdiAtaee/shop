@@ -1,7 +1,7 @@
 import ProductStatus from "./ProductStatus";
 
 export default interface IProduct {
-  _id: string;
+  uid: string;
   title: string;
   price: number;
   discountedPrice: number;

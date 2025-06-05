@@ -15,9 +15,7 @@ const OrderItem = ({
     status,
     created_at,
     updated_at,
-}: Partial<IOrder>) => {
-    console.log(id);
-    
+}: Partial<IOrder>) => {    
     return (
         <TableRow>
             <TableCell align="center">{`${user?.firstName} ${user?.lastName}`}</TableCell>

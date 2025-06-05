@@ -32,7 +32,7 @@ const index = ({ items }: productListProps) => {
         </TableHead>
         <TableBody>
           {items.map((item: IProduct) => (
-            <ProductItem {...item} key={item._id} />
+            <ProductItem {...item} key={item.uid} />
           ))}
         </TableBody>
       </Table>

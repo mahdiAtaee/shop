@@ -124,8 +124,6 @@ const CategoriesContent = () => {
 
 
   const SaveCategory = async () => {
-    console.log(state);
-
     const { data } = await httpClient.post(
       "api/v1/admin/categories",
       {

@@ -50,8 +50,6 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
         filters: [],
       },
     });
-    console.log(state);
-
   };
   const handleDeleteAttributeGroup = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -81,8 +79,8 @@ const AttributeGroup: React.FC<IAttributeGroup> = ({
       </Box>
       <Divider />
 
-      {filters.map((filter,index) => (
-        <NewAttributeValue key={index} hash={filter.hash} />
+      {filters.map((filter,index) => (        
+        <NewAttributeValue key={index} hash={filter.uid} />
       ))}
 
       <FormControl className={styles.formControl}>

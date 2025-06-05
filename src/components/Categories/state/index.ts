@@ -19,7 +19,7 @@ export const initState: ICategoryItem = {
       hash: uuid(),
       name: "مشخصات کلی",
       slug: "General-Specifications",
-      filters: []      
+      filters: []
     },
   ],
 };
@@ -45,7 +45,7 @@ export const reducer = (
         ],
       };
       break;
-    case "ADD_ATTRIBUTE":      
+    case "ADD_ATTRIBUTE":
       newState = {
         ...state,
         filterGroups: state.filterGroups.map((group) => {
@@ -53,7 +53,7 @@ export const reducer = (
             return {
               ...group,
               filters: [...group.filters, {
-                hash: uuid(),
+                uid: uuid(),
                 ...payload.filters
               }]
             };
@@ -83,10 +83,45 @@ export const reducer = (
         filterGroups: state.filterGroups.map((group) => ({
           ...group,
           filters: group.filters.map(filter => {
-            if (filter.hash === action.payload.hash) {
-              return {
-                ...filter,
-                values: filter?.values?.length > 0 ? [...filter.values, action.payload.value] : [action.payload.value]
+            if (filter.uid === action.payload.hash) {
+              if (action.payload.type == FilterValueEnum.SELECT) {
+                return {
+                  ...filter,
+                  options: filter?.options?.length > 0 ? [
+                    ...filter.options,
+                    {
+                      value: action.payload.value,
+                      label: action.payload.label
+                    }
+                  ] : [{
+                    value: action.payload.value,
+                    label: action.payload.label
+                  }],
+                  values: filter?.values?.length > 0 ? [...filter.values, action.payload.value] : [action.payload.value]
+                }
+              } else if (action.payload.type == FilterValueEnum.RANGE) {
+                return {
+                  ...filter,
+                  rangeBuckets: filter?.rangeBuckets?.length > 0
+                    ? [
+                      ...filter.rangeBuckets,
+                      {
+                        min: action.payload.min,
+                        max: action.payload.max,
+                        label: action.payload.label
+                      }
+                    ]
+                    : [{
+                      min: action.payload.min,
+                      max: action.payload.max,
+                      label: action.payload.label
+                    }],
+                }
+              } else {
+                return {
+                  ...filter,
+                  values: filter?.values?.length > 0 ? [...filter.values, action.payload.value] : [action.payload.value]
+                }
               }
             }
             return filter
@@ -100,7 +135,7 @@ export const reducer = (
         filterGroups: state.filterGroups.map((group) => ({
           ...group,
           filters: group.filters.map(filter => {
-            if (filter.hash === action.payload.hash) {
+            if (filter.uid === action.payload.hash) {
               return {
                 ...filter,
                 name: {
@@ -120,7 +155,7 @@ export const reducer = (
         filterGroups: state.filterGroups.map((group) => ({
           ...group,
           filters: group.filters.map(filter => {
-            if (filter.hash === action.payload.hash) {
+            if (filter.uid === action.payload.hash) {
               return {
                 ...filter,
                 slug: action.payload.slug
@@ -137,7 +172,7 @@ export const reducer = (
         filterGroups: state.filterGroups.map((group) => ({
           ...group,
           filters: group.filters.map(filter => {
-            if (filter.hash === action.payload.hash) {
+            if (filter.uid === action.payload.hash) {
               return {
                 ...filter,
                 type: action.payload.type as FilterValueEnum

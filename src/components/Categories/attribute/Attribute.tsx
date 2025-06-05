@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Attribute = ({
-  hash,
+  uid: hash,
   name,
   slug,
   filterable,

@@ -72,7 +72,6 @@ const CreateCoupon = () => {
             values.expires_at = date
             await httpClient.post('api/v1/admin/coupons', values)
                 .then(response => {
-                    console.log(response)
                     navigate('/coupons')
                 })
                 .catch(error => console.log(error))

@@ -1,6 +1,4 @@
 export const validateTitle = (title: string): string | null => {
-  console.log(title);
-
   if (title === "") {
     return "عنوان محصول نمیتواند خالی باشد!";
   }

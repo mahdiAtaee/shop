@@ -1,7 +1,18 @@
 import FilterValueEnum from "./FilterValueEnum";
 
+interface IAttributeOption {
+    value: string,
+    label: string
+}
+
+interface IAttributeRange {
+    min: number,
+    max: number,
+    label: string
+}
+
 export default interface IAttributeItem {
-    hash: string;
+    uid: string;
     name: {
         fa: string,
         en: string
@@ -9,6 +20,8 @@ export default interface IAttributeItem {
     slug: string,
     type: FilterValueEnum,
     values: string[]
+    options: IAttributeOption[],
+    rangeBuckets: IAttributeRange[],
     filterable: boolean,
     hasPrice: boolean
 }

@@ -96,7 +96,6 @@ const ImageUploader = ({ isMultiple, handleChange, maxAcceptImage }: ImageUpload
   const [images, setImages] = useState([])
   const styles = useStyles()
   const addImage = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
-    console.log(imageList, addUpdateIndex);
     setImages(imageList as never[]);
     handleChange(imageList)
   }

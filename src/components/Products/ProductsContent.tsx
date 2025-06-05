@@ -52,6 +52,17 @@ const useStyles = makeStyles((theme: Theme) =>
     formRow: {
       margin: important(theme.spacing(2, "auto")),
     },
+    rangeInputs: {
+      display: "flex",
+      alignItems: 'center',
+      justifyContent: 'stretch',
+      gap: '1rem',
+      width: '100%',
+      '& .MuiFormControl-root': {
+        flexBasis: 1,
+        flexGrow: 1
+      }
+    }
   })
 );
 
@@ -80,6 +91,9 @@ interface IProductAttributeItem {
   filterGroupId: string,
   filterKey: string,
   value: any,
+  filterValue?: string,
+  numericValue?: number,
+  uid?: string
 }
 
 interface IProductAttribute {
@@ -200,8 +214,6 @@ const ProductsContent = () => {
         `api/v1/admin/categories/${event.target.value}/attributes`
       )
       .then((response) => {
-        console.log(response.data);
-
         setProductAttribute(response.data);
       })
       .catch((error) => {
@@ -245,9 +257,6 @@ const ProductsContent = () => {
       form.append("gallery", file);
     });
     form.append("attributes", JSON.stringify(newProductAttribute))
-    //form.append("attributes", JSON.stringify(productAttribute));
-    console.log(newProductAttribute);
-
     httpClient.post("api/v1/admin/products", form, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -261,7 +270,7 @@ const ProductsContent = () => {
       },
     });
   };
-  
+
   const handleChangeAttribute = (
     e: React.ChangeEvent<HTMLInputElement>,
     hash: string,
@@ -272,16 +281,48 @@ const ProductsContent = () => {
     updateAttributeByHash(hash, e.target.value, slug, groupID);
   };
 
-  const handleChangeItemValue = (e: SelectChangeEvent<string>, hash: string, slug: string, groupId: string) => {
+  const handleChangeItemValue = (e: SelectChangeEvent<string>, hash: string, slug: string, groupId: string, type: FilterValueEnum, isNumeric?: boolean, label?: string) => {
     e.preventDefault()
-    setNewProductAttribute(prev => [
-      ...(prev ?? []),
-      {
-        filterGroupId: groupId,
-        filterKey: slug,
-        value: e.target.value,
-      }
-    ])
+    if (type as FilterValueEnum == FilterValueEnum.SELECT) {
+      setNewProductAttribute(prev => [
+        ...(prev ?? []),
+        {
+          filterGroupId: groupId,
+          filterKey: slug,
+          value: label ? label : e.target.value,
+          filterValue: e.target.value
+        }
+      ])
+    } else if (type as FilterValueEnum == FilterValueEnum.RANGE) {
+
+      setNewProductAttribute(prev => {
+        const updated = prev?.map(item => {
+          if (item.uid === hash) {
+            return {
+              ...item,
+              value: !isNumeric ? e.target.value : item.value,
+              numericValue: isNumeric ? Number(e.target.value) : item.numericValue
+            };
+          }
+          return item;
+        }) ?? [];
+
+        // اگر item با این hash وجود نداشت، باید اضافه بشه
+        const exists = updated.some(item => item.uid === hash);
+        if (!exists) {
+          updated.push({
+            uid: hash,
+            filterGroupId: groupId,
+            filterKey: slug,
+            filterValue: '',
+            value: !isNumeric ? e.target.value : '',
+            numericValue: isNumeric ? Number(e.target.value) : undefined
+          });
+        }
+
+        return updated;
+      });
+    }
   }
 
   const updateAttributeByHash = debounce((hash: string, value: string, slug: string, groupID: string) => {
@@ -512,7 +553,7 @@ const ProductsContent = () => {
                           label={attribute.name.fa}
                           variant="outlined"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            handleChangeAttribute(e, attribute.hash, attribute.slug, group.hash);
+                            handleChangeAttribute(e, attribute.uid, attribute.slug, group.hash);
                           }}
                         />
                       }
@@ -522,7 +563,7 @@ const ProductsContent = () => {
                           label={attribute.name.fa}
                           variant="outlined"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            handleChangeAttribute(e, attribute.hash, attribute.slug, group.hash);
+                            handleChangeAttribute(e, attribute.uid, attribute.slug, group.hash);
                           }}
                         />
                       }
@@ -533,16 +574,43 @@ const ProductsContent = () => {
                             labelId="attribute_value_label"
                             id="attribute_value"
                             label={attribute.name.fa}
-                            onChange={(e: SelectChangeEvent<string>, child: React.ReactNode) => handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash)}
+                            onChange={(e: SelectChangeEvent<string>, child: React.ReactNode) => {
+                              const selectedLabel =
+                                React.isValidElement(child) && typeof child.props.children === 'string'
+                                  ? child.props.children
+                                  : '';
+                              handleChangeItemValue(e, attribute.uid, attribute.slug, group.hash, attribute.type, selectedLabel)
+                            }}
                           >
                             <MenuItem value={0}>{attribute.name.fa} را انتخاب کنید</MenuItem>
-                            {attribute?.values?.map((value, index) => (
-                              <MenuItem key={index} value={value}>
-                                {value}
+                            {attribute?.options?.map((option, index) => (
+                              <MenuItem key={index} value={option.value}>
+                                {option.label}
                               </MenuItem>
                             ))}
                           </Select>
                         </>
+                      }
+                      {attribute.type as FilterValueEnum == FilterValueEnum.RANGE &&
+                        <div className={styles.rangeInputs}>
+                          <TextField
+                            type="number"
+                            label={attribute.name.fa}
+                            variant="outlined"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              handleChangeItemValue(e, attribute.uid, attribute.slug, group.hash, attribute.type, true);
+                            }}
+                          />
+                          <TextField
+                            type="text"
+                            label={`مقدار نمایشی ${attribute.name.fa} در فروشگاه`}
+                            variant="outlined"
+                            placeholder="مثلا: 220 گرم - 1200 نیت و ..."
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              handleChangeItemValue(e, attribute.uid, attribute.slug, group.hash, attribute.type, false);
+                            }}
+                          />
+                        </div>
                       }
                       {attribute.type == FilterValueEnum.MULTI_SELECT &&
                         <FormGroup>
@@ -553,7 +621,7 @@ const ProductsContent = () => {
                                 control={
                                   <Checkbox
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                      handleChangeItemValue(e, attribute.hash, attribute.slug, group.hash);
+                                      handleChangeItemValue(e, attribute.uid, attribute.slug, group.hash, attribute.type);
                                     }}
                                   />
                                 }

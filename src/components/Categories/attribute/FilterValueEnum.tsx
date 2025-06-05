@@ -2,6 +2,7 @@ enum FilterValueEnum {
     SELECT,
     MULTI_SELECT,
     NUMBER,
-    TEXT
+    TEXT,
+    RANGE
 }
 export default FilterValueEnum
